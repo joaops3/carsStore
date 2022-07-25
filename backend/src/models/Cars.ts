@@ -7,7 +7,7 @@ interface CarsInterface extends Model {
     name_car: string,
     model: string,
     year: number,
-    img: string,
+    img: string[],
 }
 
 export const Cars = database.define<CarsInterface>("Cars",{

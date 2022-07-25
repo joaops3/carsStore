@@ -1,16 +1,16 @@
 import { Router } from "express";
-import * as userController from "../controller/userController"
+import * as carsController from "../controller/carsController"
 import { privateRoute } from "../middlewares/privateRoute";
 
 
 const route = Router()
 
 
-route.get("/car", userController.getUsers)
-route.post("/cadastrocar", userController.createUser)
-route.get("/car/:id", userController.getUsersId)
-route.put("/car/:id", userController.updateUser)
-route.delete("/car/:id", userController.deleteUser)
+route.get("/car", carsController.getCars)
+route.post("/registercar", carsController.register)
+route.get("/car/:id", carsController.getCarsId)
+route.put("/car/:id", carsController.updateCar)
+route.delete("/car/:id", carsController.deleteCar)
 
 
 export default route
