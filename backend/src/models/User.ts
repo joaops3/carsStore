@@ -22,4 +22,4 @@ export const User = database.define<UserInterface>("User", {
 }, {tableName: "user",timestamps: false})
 
 
-User.hasMany(Cars,{constraints: true, foreignKey: "id_car"})
+//User.hasMany(Cars,{constraints: true, foreignKey: "id_car"})

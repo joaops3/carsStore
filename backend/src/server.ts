@@ -6,10 +6,12 @@ import cors from "cors"
 import dotenv from "dotenv"
 import { database } from "./instances/db"
 
+
 dotenv.config()
 
 const server = express()
-server.use(express.static(path.join(__dirname, "./public")))
+server.use(express.static(path.join(__dirname, "../public")))
+
 server.use(express.urlencoded({ extended: true }))
 server.use(cors())
 
