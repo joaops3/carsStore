@@ -62,3 +62,4 @@ export const deleteCar =  async (req: Request, res: Response) => {
     await cars.destroy()
     res.status(200).json({sucesso: "carro deletado"})
 }
+sdsadsadsdsadsadadada
