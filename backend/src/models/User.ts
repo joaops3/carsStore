@@ -1,6 +1,8 @@
 import {database} from "../instances/db"
 import { DataTypes, Model } from "sequelize"
 import {Cars} from "./Cars"
+import {Cards} from "./Cards"
+
 
 interface UserInterface extends Model {
     id:number,
@@ -22,4 +24,4 @@ export const User = database.define<UserInterface>("User", {
 }, {tableName: "user",timestamps: false})
 
 
-//User.hasMany(Cars,{constraints: true, foreignKey: "id_car"})
+User.hasMany(Cards,{constraints: true, foreignKey: "user_id "})

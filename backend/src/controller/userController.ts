@@ -17,7 +17,7 @@ import bcrypt from "bcrypt"
 
 
 export const getUsers = async (req: Request, res: Response) => {
-    const user = await User.findAll({})
+    const user = await User.findAll({include: {association: "cards"}})
     if (!user) {
         return res.json({ error: "nenhum usuario" })
     }

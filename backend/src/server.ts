@@ -41,6 +41,6 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 server.use(errorHandler)
 
 database
-    .sync({force: true})
+    .sync()
     .then(() => { server.listen(process.env.PORT) })
     .catch((err) => { console.log(err) })
