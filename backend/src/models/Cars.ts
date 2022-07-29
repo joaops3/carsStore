@@ -23,12 +23,13 @@ export const Cars = database.define<CarsInterface>("Cars",{
        this.setDataValue('carimg',val.join(';'));
     },},
     price: {type: DataTypes.INTEGER}
+    //fabricante_id: {type.DataTypes.String, references: {model: "fabricantes", key: "id"}, onUpdate: "CASCATE", onDelete: "CASCATE"}
 
 }, {tableName: "cars", timestamps: false})
 
 
 
 //Cars.belongsTo(Fabricante, {foreignKey: "id_fabricante", constraints: true})
-Cars.hasMany(User, {foreignKey: "id_car", constraints: true})
+//1:15
 
 

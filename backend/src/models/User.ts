@@ -13,7 +13,7 @@ interface UserInterface extends Model {
 
 
 export const User = database.define<UserInterface>("User", {
-    id: {type: DataTypes.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true},
+    id: {type: DataTypes.INTEGER , allowNull: false, primaryKey: true},
     name: {type: DataTypes.STRING},
     email: {type: DataTypes.STRING},
     nascimento: {type: DataTypes.DATE},

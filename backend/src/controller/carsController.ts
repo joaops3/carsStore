@@ -13,12 +13,13 @@ export const getCars = async (req: Request, res: Response) => {
 }
 
 export const register = async (req: Request, res: Response) => {
-    // if (!req.body.name || !req.body.price || !req.body.model || !req.body.year) {
-    //     return res.status(422).json({ error: "faltando nome, ano, preco e modelo são obrigatorios" })
-    // }
+    if (!req.body.name || !req.body.price || !req.body.model || !req.body.year) {
+        return res.status(422).json({ error: "faltando nome, ano, preco e modelo são obrigatorios" })
+    }
     if (req.files?.length === 0 || req.files === undefined) {
         return res.json({ error: "envie uma imagem" })
     }
+    //gerenciar imagens
     const files = req.files as Express.Multer.File[]
     const filesDb: any = []
     files.forEach(async (file) => {
@@ -37,14 +38,14 @@ export const register = async (req: Request, res: Response) => {
 }
 
 export const getCarsId = async (req: Request, res: Response) => {
-    const {id} = req.params
-    try{
-        const cars = await Cars.findByPk(id)
-        if (!cars) {
-            return res.status(400).json({ error: "nenhum carro encontrado" })
-        }
-        res.status(200).json({ cars })
-    }   catch(e){console.log(e)} 
+    const { id } = req.params
+
+    const cars = await Cars.findByPk(id).catch(e => console.log(e))
+    if (!cars) {
+        return res.status(400).json({ error: "nenhum carro encontrado" })
+    }
+    res.status(200).json({ cars })
+
 }
 
 
@@ -53,13 +54,12 @@ export const updateCar = (req: Request, res: Response) => {
     res.status(200).json()
 }
 
-export const deleteCar =  async (req: Request, res: Response) => {
-    const {id} = req.params
-    let cars = await Cars.findByPk(id)
-    if(!cars){
-        return res.status(422).json({error: "car not found"})
+export const deleteCar = async (req: Request, res: Response) => {
+    const { id } = req.params
+    let cars = await Cars.findByPk(id).catch(e => console.log(e))
+    if (!cars) {
+        return res.status(422).json({ error: "car not found" })
     }
     await cars.destroy()
-    res.status(200).json({sucesso: "carro deletado"})
+    res.status(200).json({ sucesso: "carro deletado" })
 }
-sdsadsadsdsadsadadada

@@ -8,7 +8,7 @@ import bcrypt from "bcrypt"
 
 // export const ping =(req:Request, res:Response) => {
 //     try{database.authenticate()
-//         console.log("aeeeeeeeeeeeeeeee")
+//         console.log("funciono")
 
 //     }catch(e){console.log(e)}
 
@@ -40,20 +40,19 @@ export const createUser = async (req: Request, res: Response) => {
 
     //search for user
     const { name, email, password, nascimento, admin } = req.body
-    const hasUser = await User.findOne({ where: { email } })
+    const hasUser = await User.findOne({ where: { email } }).catch((e) => {console.log(e)})
     if (hasUser) {
         return res.json({ error: "email ja cadastrado" })
     }
 
-    //generate password
-    const salt = await bcrypt.genSalt(12) // gera 12 caracteres aleatorios para colocar dps da senha
-    const hash = await bcrypt.hash(password, salt)
-
     try {
+         //generate password
+        const salt = await bcrypt.genSalt(12) // gera 12 caracteres aleatorios para colocar dps da senha
+        const hash = await bcrypt.hash(password, salt)
         const newUser = await User.create({ name, email, nascimento, admin, password: hash })
         const token = await generateToken({ id: newUser.id, email: newUser.email })
         res.status(201).json({ id: newUser.id, token })
-    } catch (e) { res.status(500).json({ error: "erro" }) }
+    } catch (e) {res.status(500).json({ error: "erro" }) }
 }
 
 export const getUsersId = async (req: Request, res: Response) => {
@@ -107,6 +106,5 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const token = await generateToken({ id: user.id, email: user.email })
-
     res.status(201).json({ id: user.id, token })
 }

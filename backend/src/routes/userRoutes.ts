@@ -13,5 +13,9 @@ route.get("/user/:id", privateRoute, userController.getUsersId)
 route.put("/user/:id", privateRoute, userController.updateUser)
 route.delete("/user/:id", privateRoute, userController.deleteUser)
 
+route.get("user/:id/buy")
+route.get("user/:id/seeallcars")
+route.get("user/:id/sell")
+
 
 export default route
