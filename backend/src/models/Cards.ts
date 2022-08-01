@@ -10,11 +10,12 @@ interface CardsInterface extends Model{
 }
 
 export const Cards = database.define<CardsInterface>("Cards", {
-    id: {type: DataTypes.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true},
+    id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, allowNull: false},
     card_number: {type: DataTypes.INTEGER},
     card_code: {type: DataTypes.INTEGER},
-    user_id: {type: DataTypes.INTEGER, references: {model: "User", key: "id"}, onUpdate: "CASCATE", onDelete: "CASCATE"}
+    user_id: {type: DataTypes.INTEGER, references: {model: "User", key: "id"}}
 
 }, {tableName: "cards", timestamps: false} )
 
 Cards.belongsTo(User, {foreignKey: "user_id", constraints: true})
+User.hasMany(Cards,{foreignKey: "user_id"})

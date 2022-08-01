@@ -31,7 +31,7 @@ export const register = async (req: Request, res: Response) => {
         } catch (e) { console.log(e) }
     })
     try {
-        let newCar = Cars.build({ name_car: req.body.name, model: req.body.model, year: req.body.year, carimg: filesDb, price: req.body.price })
+        let newCar = Cars.build({ name_car: req.body.name_car, model: req.body.model, year: req.body.year, carimg: filesDb, price: req.body.price })
         await newCar.save()
     } catch (e) { console.log(e) }
     res.status(200).json({ sucesso: "carro cadastrado com sucesso" })

@@ -1,9 +1,11 @@
 import { Request, Response } from "express"
-import { json } from "stream/consumers"
 import { database } from "../instances/db"
 import { User } from "../models/User"
+import { Cards } from "../models/Cards"
 import { generateToken } from "../middlewares/privateRoute"
 import bcrypt from "bcrypt"
+import { Cars } from "../models/Cars"
+
 
 
 // export const ping =(req:Request, res:Response) => {
@@ -17,7 +19,8 @@ import bcrypt from "bcrypt"
 
 
 export const getUsers = async (req: Request, res: Response) => {
-    const user = await User.findAll({include: {association: "cards"}})
+    const user = await User.findAll()
+
     if (!user) {
         return res.json({ error: "nenhum usuario" })
     }
@@ -40,28 +43,32 @@ export const createUser = async (req: Request, res: Response) => {
 
     //search for user
     const { name, email, password, nascimento, admin } = req.body
-    const hasUser = await User.findOne({ where: { email } }).catch((e) => {console.log(e)})
+    const hasUser = await User.findOne({ where: { email } }).catch((e) => { console.log(e) })
     if (hasUser) {
         return res.json({ error: "email ja cadastrado" })
     }
 
     try {
-         //generate password
+        //generate password
         const salt = await bcrypt.genSalt(12) // gera 12 caracteres aleatorios para colocar dps da senha
         const hash = await bcrypt.hash(password, salt)
         const newUser = await User.create({ name, email, nascimento, admin, password: hash })
         const token = await generateToken({ id: newUser.id, email: newUser.email })
         res.status(201).json({ id: newUser.id, token })
-    } catch (e) {res.status(500).json({ error: "erro" }) }
+    } catch (e) { res.status(500).json({ error: "erro: " + e }) }
 }
 
 export const getUsersId = async (req: Request, res: Response) => {
     console.log("meu user", req.user)
     const id = req.params.id
-    const user = await User.findOne({ where: { id } })
+
+    const user = await User.findOne({ include: Cards, where: { id } })
+
+    //const card = await user.getCards()
+
     if (!user) { return res.json({ error: "usuario nao encontrado" }) }
 
-    res.status(201).json({ sucesso: user })
+    res.status(201).json({ user: user })
 }
 
 export const deleteUser = async (req: Request, res: Response) => {
@@ -94,17 +101,19 @@ export const login = async (req: Request, res: Response) => {
         return res.status(422).json({ error: "enviar email e senha" })
     }
     const { email, password } = req.body
-    const user = await User.findOne({ where: { email} })
+    const user = await User.findOne({ where: { email } })
     if (!user) {
         return res.status(422).json({ error: "usuario nao cadastrado no sistema" })
     }
 
     //check password and email
     const checkpassword = await bcrypt.compare(password, user.password)
-    if(!checkpassword){
-        return res.status(422).json({error: "senha invalida!"})
+    if (!checkpassword) {
+        return res.status(422).json({ error: "senha invalida!" })
     }
 
     const token = await generateToken({ id: user.id, email: user.email })
     res.status(201).json({ id: user.id, token })
 }
+
+
