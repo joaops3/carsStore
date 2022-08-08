@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import { Cars } from "../models/Cars";
 import { unlink } from "fs/promises"
 import sharp from "sharp"
+import { Carsimg } from "../models/Carimg";
 
 
 export const getCars = async (req: Request, res: Response) => {
-    const cars = await Cars.findAll()
+    const cars = await Cars.findAll({include: {model: Carsimg, attributes: {exclude: ["id", "car_id"]}}})
     if (!cars) {
         res.status(400).json({ error: "nenhum carro encontrado" })
     }
@@ -13,26 +14,30 @@ export const getCars = async (req: Request, res: Response) => {
 }
 
 export const register = async (req: Request, res: Response) => {
-    if (!req.body.name || !req.body.price || !req.body.model || !req.body.year) {
-        return res.status(422).json({ error: "faltando nome, ano, preco e modelo são obrigatorios" })
-    }
-    if (req.files?.length === 0 || req.files === undefined) {
-        return res.json({ error: "envie uma imagem" })
-    }
+    // if (!req.body.name || !req.body.price || !req.body.model || !req.body.year) {
+    //     return res.status(422).json({ error: "faltando nome, ano, preco e modelo são obrigatorios" })
+    // }
+    // if (req.files?.length === 0 || req.files === undefined) {
+    //     return res.json({ error: "envie uma imagem" })
+    // }
     //gerenciar imagens
     const files = req.files as Express.Multer.File[]
+
     const filesDb: any = []
-    files.forEach(async (file) => {
-        filesDb.push(file.filename)
-        try {
-            await sharp(file.path)
-                .toFile(`./public/img/${file.filename}`)
-            await unlink(file.path)
-        } catch (e) { console.log(e) }
-    })
+    // files.forEach(async (file) => {
+    //     filesDb.push(file.filename)
+    //     try {
+    //         await sharp(file.path)
+    //             .toFile(`./public/img/${file.filename}`)
+    //         await unlink(file.path)
+    //     } catch (e) { console.log(e)}
+    // })
     try {
-        let newCar = Cars.build({ name_car: req.body.name_car, model: req.body.model, year: req.body.year, carimg: filesDb, price: req.body.price })
-        await newCar.save()
+        let newCar = await Cars.create({ name_car: req.body.name_car, model: req.body.model, year: req.body.year, price: req.body.price })
+        
+        files.forEach(async (file) => { let carimg = await Carsimg.create({ key: file.filename, url: "teste",car_id: newCar.id})
+        filesDb.push(carimg)})
+          await newCar.addCarsimg([filesDb])
     } catch (e) { console.log(e) }
     res.status(200).json({ sucesso: "carro cadastrado com sucesso" })
 }

@@ -19,7 +19,7 @@ import { Cars } from "../models/Cars"
 
 
 export const getUsers = async (req: Request, res: Response) => {
-    const user = await User.findAll()
+    const user = await User.findAll({attributes: {exclude: ["password"]}})
 
     if (!user) {
         return res.json({ error: "nenhum usuario" })
@@ -43,7 +43,7 @@ export const createUser = async (req: Request, res: Response) => {
 
     //search for user
     const { name, email, password, nascimento, admin } = req.body
-    const hasUser = await User.findOne({ where: { email } }).catch((e) => { console.log(e) })
+    const hasUser = await User.findOne({ where: { email }, }).catch((e) => { console.log(e) })
     if (hasUser) {
         return res.json({ error: "email ja cadastrado" })
     }
@@ -62,7 +62,7 @@ export const getUsersId = async (req: Request, res: Response) => {
     console.log("meu user", req.user)
     const id = req.params.id
 
-    const user = await User.findOne({ include: Cards, where: { id } })
+    const user = await User.findOne({ include: Cards, where: { id }, attributes: {exclude: ["password"]} })
 
     //const card = await user.getCards()
 
