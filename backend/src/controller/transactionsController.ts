@@ -38,6 +38,8 @@ export const buyCar = async (req: Request, res: Response) => {
 }
 
 export const seeowned = async (req: Request, res: Response) => {
+    //GET CARS OWNED BY USER
+
     const { id } = req.params
     //const user = await User.findOne({ include: { model: Cars, attributes: [], through: { attributes: [] } }, where: { id } })
     const user = await User.findByPk(id)
@@ -51,6 +53,7 @@ export const seeowned = async (req: Request, res: Response) => {
 
 
 export const sellCar = async (req: Request, res: Response) => {
+    //REMOVE A CAR FROM THE USER
     const { id, idcar } = req.params
     const user = await User.findByPk(id)
     const car = await Cars.findByPk(idcar)

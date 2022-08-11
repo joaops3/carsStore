@@ -6,12 +6,35 @@ import { Carsimg } from "../models/Carimg";
 
 
 export const getCars = async (req: Request, res: Response) => {
-    const cars = await Cars.findAll({include: {model: Carsimg, attributes: {exclude: ["id", "car_id"]}}})
-    if (!cars) {
-        res.status(400).json({ error: "nenhum carro encontrado" })
+    const { page, limit } = (req.query)
+    if (!page && !limit) {
+
+        const cars = await Cars.findAll({ include: { model: Carsimg, attributes: { exclude: ["id", "car_id"] } } })
+        if (!cars) {
+            res.status(400).json({ error: "nenhum carro encontrado" })
+        }
+
+        return res.status(200).json({ cars })
     }
-    res.status(200).json({ cars })
+
+    //PAGINATION QUERY
+    let offset: number = page ? Number(page) * Number(limit) : 0;
+
+    let totalPages: number = 0
+    await Cars.findAndCountAll({ limit: Number(limit), offset: offset, include: { model: Carsimg, attributes: { exclude: ["id", "car_id"] } } })
+        .then((data) => {
+            if (!data) {
+                res.status(400).json({ error: "nenhum carro encontrado" })
+
+            } else {
+                totalPages = Math.ceil(data.count / Number(limit)),
+                res.status(200).json({ cars: data, totalPages, totalItems: data.count, currentPage: page })
+            }
+
+        })
+        .catch((e) => console.log(e))
 }
+
 
 export const register = async (req: Request, res: Response) => {
     // if (!req.body.name || !req.body.price || !req.body.model || !req.body.year) {
@@ -20,7 +43,8 @@ export const register = async (req: Request, res: Response) => {
     // if (req.files?.length === 0 || req.files === undefined) {
     //     return res.json({ error: "envie uma imagem" })
     // }
-    //gerenciar imagens
+
+    //GERENCIAR IMAGENS
     const files = req.files as Express.Multer.File[]
 
     const filesDb: any = []
@@ -34,10 +58,13 @@ export const register = async (req: Request, res: Response) => {
     // })
     try {
         let newCar = await Cars.create({ name_car: req.body.name_car, model: req.body.model, year: req.body.year, price: req.body.price })
-        
-        files.forEach(async (file) => { let carimg = await Carsimg.create({ key: file.filename, url: "teste",car_id: newCar.id})
-        filesDb.push(carimg)})
-          await newCar.addCarsimg([filesDb])
+
+        files.forEach(async (file) => {
+            let carimg = await Carsimg.create({ key: file.filename, url: "teste", car_id: newCar.id })
+            filesDb.push(carimg)
+
+        })
+        await newCar.addCarsimg([filesDb])
     } catch (e) { console.log(e) }
     res.status(200).json({ sucesso: "carro cadastrado com sucesso" })
 }
