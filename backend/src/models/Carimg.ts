@@ -18,5 +18,5 @@ export const Carsimg = database.define<CarimgInterface>("Carimg",{
 }, {tableName: "carimg", timestamps: false})
 
 
-Carsimg.belongsTo(Cars, {foreignKey: "car_id", constraints: true})
+Carsimg.belongsTo(Cars, {foreignKey: "car_id", constraints: true, onDelete: "CASCATE"})
 Cars.hasMany(Carsimg, {foreignKey: "car_id"})

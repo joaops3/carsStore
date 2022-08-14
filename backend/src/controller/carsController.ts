@@ -3,6 +3,7 @@ import { Cars } from "../models/Cars";
 import { unlink } from "fs/promises"
 import sharp from "sharp"
 import { Carsimg } from "../models/Carimg";
+import {s3, deleteaws} from "../middlewares/upload"
 
 
 export const getCars = async (req: Request, res: Response) => {
@@ -37,15 +38,15 @@ export const getCars = async (req: Request, res: Response) => {
 
 
 export const register = async (req: Request, res: Response) => {
-    // if (!req.body.name || !req.body.price || !req.body.model || !req.body.year) {
-    //     return res.status(422).json({ error: "faltando nome, ano, preco e modelo são obrigatorios" })
-    // }
-    // if (req.files?.length === 0 || req.files === undefined) {
-    //     return res.json({ error: "envie uma imagem" })
-    // }
+    if (!req.body.name || !req.body.price || !req.body.model || !req.body.year) {
+        return res.status(422).json({ error: "faltando nome, ano, preco e modelo são obrigatorios" })
+    }
+    if (req.files?.length === 0 || req.files === undefined) {
+        return res.json({ error: "envie uma imagem" })
+    }
 
     //GERENCIAR IMAGENS
-    const files = req.files as Express.Multer.File[]
+    const files = req.files as Express.MulterS3.File[]
 
     const filesDb: any = []
     // files.forEach(async (file) => {
@@ -60,11 +61,11 @@ export const register = async (req: Request, res: Response) => {
         let newCar = await Cars.create({ name_car: req.body.name_car, model: req.body.model, year: req.body.year, price: req.body.price })
 
         files.forEach(async (file) => {
-            let carimg = await Carsimg.create({ key: file.filename, url: "teste", car_id: newCar.id })
+            const {location = "error"} = file
+            let carimg = await Carsimg.create({ key: file.key, url: location , car_id: newCar.id })
             filesDb.push(carimg)
 
         })
-        await newCar.addCarsimg([filesDb])
     } catch (e) { console.log(e) }
     res.status(200).json({ sucesso: "carro cadastrado com sucesso" })
 }
@@ -89,9 +90,20 @@ export const updateCar = (req: Request, res: Response) => {
 export const deleteCar = async (req: Request, res: Response) => {
     const { id } = req.params
     let cars = await Cars.findByPk(id).catch(e => console.log(e))
+    let carsimg = await Carsimg.findAll({where: {car_id: id}})
     if (!cars) {
         return res.status(422).json({ error: "car not found" })
     }
+     if(carsimg.length > 0){
+            carsimg.forEach(async (img) => {
+                await deleteaws.deleteObject({ Bucket: process.env.AWS_BUCKET as string, Key: img.key }, function(err: any, data: any) {
+                    if (err) console.log(err, err.stack);  // error
+                    else     console.log("sucesso");                 // Sucess
+                  })
+            
+            })
+        }
+    await Carsimg.destroy({where: {car_id: id}})
     await cars.destroy()
     res.status(200).json({ sucesso: "carro deletado" })
 }
