@@ -1,0 +1,31 @@
+%button {
+  border: none;
+  background: $button-login;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: content-box;
+  text-decoration: none;
+}
+.header {
+  &-login{
+    @extend %button;
+    margin-right: 15px;
+    background: $button-login-bg;
+    outline: 1px solid $button-login;
+    color: $button-login;
+    &:hover {
+      color: $button-login-bg;
+      background-color: $button-login;
+    }
+  }
+
+  &-cadastrar {
+    @extend %button;
+    color: $button-login-bg;
+    &:hover {
+      color: $button-login-bg;
+      background-color: $button-login-hover;
+    }
+  }
+}

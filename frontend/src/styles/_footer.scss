@@ -1,0 +1,25 @@
+footer{
+    background-color: $fotter-bg;
+
+    h4, span{
+        color: $footer-titles;
+    }
+
+    span:hover {
+        cursor: pointer;
+        color: #ccc;
+    }
+    a{
+        text-decoration: none;
+        color: $footer-links;
+         
+        &:hover{
+            text-decoration: underline;
+            color: $footer-links;
+        }
+    }
+
+    .line{
+        border-top: 1px solid $footer-titles;
+    }
+}

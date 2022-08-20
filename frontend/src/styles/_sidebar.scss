@@ -1,0 +1,29 @@
+.sidebar{
+    height: 100vh;
+ 
+
+}
+
+
+.sidebarIcon{
+    border-bottom: 1px solid white;
+}
+
+
+.link{
+    
+    
+    &-sidebar{
+        text-decoration: none;
+        
+
+        &:hover{
+            color:yellow;
+        }
+    }
+}
+
+
+.mainSideBar{
+    border-right: 1px solid black;
+}

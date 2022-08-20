@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
-import HeaderProfile from "./headerProfile/HeaderProfile";
+import Header from "../Header";
 import SideBar from "./sidebar/SideBar";
 import { Container, Row, Col } from "react-bootstrap";
-import "../../styles/sidebar.scss";
+
 
 interface MainProfileInterface {
   children: React.ReactNode;
@@ -11,13 +11,15 @@ interface MainProfileInterface {
 const MainProfile: React.FC<MainProfileInterface> = ({ children }) => {
   return (
     <>
-      <HeaderProfile></HeaderProfile>
-      <Container fluid className={"d-flex bg-primary"}>
+   
+      <Header></Header>
+      <div className={"w-100 d-flex mt-5 pt-2"}>
         <SideBar></SideBar>
         <Col sm={6} className={"bg-danger flex-fill"}>
-          <Container>{children}</Container>
+          {children}
         </Col>
-      </Container>
+        </div>
+      
     </>
   );
 };

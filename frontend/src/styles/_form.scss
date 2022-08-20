@@ -1,0 +1,25 @@
+.errorInput{
+    border-color: red;
+    
+}
+
+.p-login{
+    @include flex;
+    justify-content: center;
+    margin-top: 70px;
+    min-height: 80vh;
+}
+
+.bg-login{
+    background-color: black;
+    border-radius: 5px;
+}
+
+.input{
+    border: 1px solid rgb(24, 23, 23);
+    width: 100%;
+    border-radius: 5px;
+    padding: 3px;
+
+}
+
