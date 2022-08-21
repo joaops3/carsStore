@@ -1,17 +1,36 @@
+%links{
+    color: $header-links;
+    font-size: 20px;
+    &:hover{
+        color: $button-login-hover;
+    }
+    &:active{
+        color: $button-login-hover;
+    }
+}
+
 .header{
-    background-color: transparent;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    transition: 0.5s;
 
+    &-bg{
+        background-color: $fotter-bg;
+        .links{
+            @extend %links;
+         }
+    }
 
-    .links{
-        color: #fff;
-        font-size: 20px;
-        &:hover{
-            color: $button-login-hover;
+    &-active{
+        background-color: $fotter-bg;
+        transition: 0.5s;
+        .links{
+           @extend %links;
         }
     }
 
-
-
+    .links{  
+            @extend %links;
+    }
     &-user{
       
       

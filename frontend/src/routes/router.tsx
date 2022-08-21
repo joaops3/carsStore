@@ -9,9 +9,8 @@ import Register from '../Pages/register/Register'
 function Router() {
   return (
    <>
-<Header/>
+<Header fixed={true}/>
    <Routes>
-    
     <Route path="/" element={<Home/>}></Route>
     <Route path="/login" element={<Login/>}></Route>
     <Route path="/register" element={<Register/>}></Route>

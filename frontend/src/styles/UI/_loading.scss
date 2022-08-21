@@ -1,0 +1,23 @@
+@keyframes loading{
+    from{
+        opacity: 1;
+        transition: 0.5s
+    }to{
+        opacity: 0;
+        transition: 0.5s
+    }
+}
+
+
+.loading{
+    @include flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 80vh;
+
+    .icon{
+        animation-name: loading;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+    }
+}

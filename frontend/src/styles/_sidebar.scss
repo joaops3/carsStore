@@ -1,6 +1,20 @@
 .sidebar{
     height: 100vh;
- 
+    background-color: $sidebar-bg;
+   
+    .link{
+    
+    
+        &-sidebar{
+            text-decoration: none;
+            color: $header-links;
+            
+    
+            &:hover{
+                color: $button-login-hover;
+            }
+        }
+    }
 
 }
 
@@ -10,18 +24,7 @@
 }
 
 
-.link{
-    
-    
-    &-sidebar{
-        text-decoration: none;
-        
 
-        &:hover{
-            color:yellow;
-        }
-    }
-}
 
 
 .mainSideBar{

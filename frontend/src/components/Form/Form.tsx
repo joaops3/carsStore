@@ -3,12 +3,14 @@ import {Container, Form, Col, Row} from "react-bootstrap"
 
 const FormRegister = () => {
   return (
-    <Container>
-        <Form>
+    <Container className="mt-5">
+        <Form className="bg-login p-4">
+          <Row>
             <Form.Group as={Col} md={3}>
                 <Form.Label>name</Form.Label>
                 <Form.Control type="text" placeholder="name" bsPrefix="custom-class" className="input"></Form.Control>
             </Form.Group>
+          </Row>
         </Form>
     </Container>
   )

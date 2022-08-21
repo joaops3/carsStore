@@ -9,19 +9,19 @@ const LoginForm: React.FC = () => {
     <main className="p-login">
       <Container className ="">
         <Form className="d-flex justify-content-center">
-          <Col md={4} className="bg-login p-3">
+          <Col md={5} className="bg-login p-3">
           <Form.Group className="text-center fs-2" controlId="">
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="text" placeholder="Email"></Form.Control>
+            <Form.Label className="login-title">Email</Form.Label>
+            <Form.Control type="text" placeholder="Email" ></Form.Control>
           </Form.Group>
           <Form.Group className="text-center fs-2 pt-2" controlId="">
-            <Form.Label>Senha</Form.Label>
+            <Form.Label  className="login-title">Senha</Form.Label>
             <Form.Control type="text" placeholder="Senha"></Form.Control>
           </Form.Group>
           <Form.Text><a href="#">Recuperar senha</a></Form.Text>
           <Form.Group as={Col} sm={12} className="d-flex align-items-center justify-content-center pt-2"> 
        
-            <Button>Login</Button>
+            <Button bsPrefix="custom-class" className="header-cadastrar">LOGAR</Button>
          
           
           </Form.Group>

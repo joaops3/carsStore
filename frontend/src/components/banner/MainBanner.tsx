@@ -1,10 +1,10 @@
 import React from 'react'
-
+import {GiLibertyWing} from "react-icons/gi"
 const MainBanner = () => {
   return (
     <main className='bg-img'>
         <div className="banner-container">
-        <h1>tudo que vc precisa aqui</h1>
+        <h1>VENI VIDI VICI <span><GiLibertyWing size={50}></GiLibertyWing></span></h1>
 
         </div>
     </main>

@@ -1,12 +1,16 @@
 import React from 'react'
-import {Row,Form} from "react-bootstrap"
+import {Row,Form, Col} from "react-bootstrap"
+import Button from "../UI/buttons/ButtonHeader"
+import {FaSearch} from "react-icons/fa"
 
 const SearchBar = () => {
   return (
     <>
-    <Row>
-    <Form.Control></Form.Control>
-    <button></button>
+    <Row className='justify-content-center pt-2'>
+      <Col md={6} className="d-flex ">
+      <Form.Control></Form.Control>
+      <Button className='mx-2 header-cadastrar p-2'><FaSearch size={20}></FaSearch></Button>
+      </Col>
     </Row>
     </>
   )

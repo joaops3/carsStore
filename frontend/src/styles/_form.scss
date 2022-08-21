@@ -11,15 +11,20 @@
 }
 
 .bg-login{
-    background-color: black;
+    background-color: $bg-form;
     border-radius: 5px;
 }
 
 .input{
     border: 1px solid rgb(24, 23, 23);
     width: 100%;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 3px;
 
+
+}
+
+.login-title{
+    color: $secondary-banner;
 }
 

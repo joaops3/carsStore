@@ -11,12 +11,12 @@ interface MainProfileInterface {
 const MainProfile: React.FC<MainProfileInterface> = ({ children }) => {
   return (
     <>
-   
-      <Header></Header>
-      <div className={"w-100 d-flex mt-5 pt-2"}>
+      <div className={"w-100 d-flex"}>
         <SideBar></SideBar>
-        <Col sm={6} className={"bg-danger flex-fill"}>
+        <Col sm={6} className={"flex-fill"}>
+          <Container>
           {children}
+          </Container>
         </Col>
         </div>
       
