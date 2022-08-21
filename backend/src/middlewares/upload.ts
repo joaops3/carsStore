@@ -34,7 +34,7 @@ const storageTypes = {
 
 export const upload = multer({
     storage: storageTypes.s3, fileFilter: (req, file, cb) => {
-        let requirements = /[\/.](gif|jpg|jpeg|png)$/i;
+        let requirements = /[\/.](gif|jpg|jpeg|png|svg|webp)$/i;
         if (!file.mimetype.match(requirements)) {
             return cb(new Error("error tipo de arquivo invalido"))
         }

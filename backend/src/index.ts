@@ -43,4 +43,4 @@ server.use(errorHandler)
 database
     .sync()
     .then(() => { server.listen(process.env.PORT) })
-    .catch((err) => { console.log(err) })
+    .catch((err) => { console.log(err)})

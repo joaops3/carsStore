@@ -38,8 +38,18 @@ export const getCars = async (req: Request, res: Response) => {
 
 
 export const register = async (req: Request, res: Response) => {
-    if (!req.body.name || !req.body.price || !req.body.model || !req.body.year) {
-        return res.status(422).json({ error: "faltando nome, ano, preco e modelo são obrigatorios" })
+    console.log("aq", req.body)
+    if (!req.body.name_car) {
+        return res.status(422).json({ error: "nome é obrigatorios" })
+    }
+    if (!req.body.year) {
+        return res.status(422).json({ error: "ano é obrigatorios" })
+    }
+    if (!req.body.model) {
+        return res.status(422).json({ error: "modelo é obrigatorios" })
+    }
+    if (!req.body.price) {
+        return res.status(422).json({ error: "preco é obrigatorios" })
     }
     if (req.files?.length === 0 || req.files === undefined) {
         return res.json({ error: "envie uma imagem" })

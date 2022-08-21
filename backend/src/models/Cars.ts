@@ -29,7 +29,7 @@ export const Cars = database.define<CarsInterface>("Cars", {
     //     //     this.setDataValue('carimg', val.join(';'));
     //     // },
     // },
-    price: { type: DataTypes.INTEGER }
+    price: { type: DataTypes.FLOAT(8,2) }
 
 }, { tableName: "cars", timestamps: false })
 
