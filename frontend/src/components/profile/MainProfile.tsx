@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import Header from "../Header";
+import Header from "../header/Header";
 import SideBar from "./sidebar/SideBar";
 import { Container, Row, Col } from "react-bootstrap";
 

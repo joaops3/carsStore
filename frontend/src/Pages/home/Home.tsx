@@ -1,32 +1,38 @@
 import React from "react";
-import Header from "../../components/Header";
+import Header from "../../components/header/Header";
 import MainBanner from "../../components/banner/MainBanner";
 import Banner from "../../components/banner/Banner";
 import BannerLeft from "../../components/banner/BannerLeft";
 import Footer from "../../components/footer/Footer";
 import img1 from "../../assets/images/banner1.png";
+import Table from "../../components/table/Table";
 import { Row, Container, Col } from "react-bootstrap";
 import MainSideBar from "../../components/mainSideBar/MainSideBar";
 import SearchBar from "../../components/search/SearchBar";
 import Loading from "../../components/UI/loading/Loading";
 import { useState, useEffect } from "react";
-import { CarsInterface, cars, carsQuery } from "../../interfaces/interfaces";
+import { CarsInterface, carsQuery } from "../../interfaces/interfaces";
 import Cards from "../../components/table/Card/Cards";
+import CarsService from "../../api/CarsService";
 const Home = () => {
-  const [data, setData] = useState<any | undefined >(undefined)
+  const [data, setData] = useState<any | undefined>(undefined);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [totalItems, setTotalItems] = useState<number>(0);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(6);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const getCars = async () => {
-      await fetch("http://localhost:8000/car?page=0&limit=6")
-        .then((res) => {return res.json()})
-        .then((data) => {setData(data)})
-       
-  }
+  const handlePageChange = (currentPage: number) => {
+    setCurrentPage(currentPage);
+  };
 
-  useEffect(()=>{getCars()},[])
+  useEffect(() => {
+    CarsService().getCars().then((data) => {setData(data)})
+    
+  }, []);
+  
   return (
-   
     <>
-     {console.log(data)}
+      {console.log(data)}
       <MainBanner></MainBanner>
       <Banner img={img1}>
         <h1 className="">title</h1>
@@ -48,12 +54,15 @@ const Home = () => {
           <SearchBar></SearchBar>
           <MainSideBar></MainSideBar>
           <Col>
-          <Container className="">
-            <Row className="p-2">
-              {/* {@ts-ignore} */}
-              {data !== undefined && (data.cars.rows.map((card: any)=> {return <Cards name_car={card.name_car} model={card.model} year={card.year} price={card.price} Carimgs={card.Carimgs}></Cards>})) }
-            </Row>
-          </Container>
+            {/* {loading ? (
+              <Loading></Loading>
+            ) : (
+              <Table
+                data={data}
+                itemsPerPage={itemsPerPage}
+                handlePageChange={(e) => handlePageChange(e)}
+              ></Table>
+            )} */}
           </Col>
         </Row>
       </Container>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
-import Button from "./UI/buttons/ButtonHeader";
+import Button from "../UI/buttons/ButtonHeader";
 import { BiUserCircle } from "react-icons/bi";
 import { BsFillBasketFill } from "react-icons/bs";
 import Logo from "../assets/logo/logo.svg";

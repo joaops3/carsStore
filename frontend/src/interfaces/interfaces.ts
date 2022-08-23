@@ -7,16 +7,17 @@ export interface CarsInterface {
     Carimgs: Carimgs[]
 }
 
-export interface cars {
-    cars: carsQuery[]
-}
 
 export interface carsQuery {
     count: number,
-    rows: CarsInterface[],
-    totalPages: number,
-    totalItems: number,
-    currentpage: string
+    cars: {
+        count: number,
+        rows: CarsInterface[],
+        totalPages: number,
+        totalItems: number,
+        currentpage: string
+
+    }
 }
 
 export interface Carimgs {
@@ -32,7 +33,8 @@ export interface CardsInterface{
 export interface UsersInterface {
     name: string,
     email: string, 
-    nascimento: Date,
+    nascimento: string,
     admin: boolean,
-    cards: CardsInterface[]
+    password: string
+    cards?: CardsInterface[]
 }
