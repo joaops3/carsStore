@@ -3,7 +3,7 @@ import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
 import Button from "../UI/buttons/ButtonHeader";
 import { BiUserCircle } from "react-icons/bi";
 import { BsFillBasketFill } from "react-icons/bs";
-import Logo from "../assets/logo/logo.svg";
+import Logo from "../../assets/logo/logo.svg";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -62,19 +62,19 @@ const Header: React.FC<Props> = ({fixed}) => {
                   Home
                 </Nav.Link>
                 <Nav.Link href="#action2" className={"links"}>
-                  Link
+                  Vantagens
                 </Nav.Link>
-                <Nav.Link href="#action2" className={"links"}>
-                  Link
+                <Nav.Link href="#action3" className={"links"}>
+                  Produtos
                 </Nav.Link>
-                <Nav.Link href="#action2" className={"links"}>
-                  Link
+                <Nav.Link href="#action4" className={"links"}>
+                  Sobre
                 </Nav.Link>
               </Nav>
               <Nav>
                 {isLogged ? (
                   <>
-                    <Nav.Link href="#action2" className="links">
+                    <Nav.Link href="#action5" className="links">
                       <BsFillBasketFill size={25} />
                     </Nav.Link>
                     <NavDropdown
@@ -82,10 +82,10 @@ const Header: React.FC<Props> = ({fixed}) => {
                       title={<BiUserCircle size={30} className="links" />}
                       id="navbarScrollingDropdown"
                     >
-                      <NavDropdown.Item href="#action4">
+                      <NavDropdown.Item href="#action6">
                         Perfil
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="#action5">
+                      <NavDropdown.Item href="#action7">
                         Logout
                       </NavDropdown.Item>
                     </NavDropdown>
@@ -96,7 +96,7 @@ const Header: React.FC<Props> = ({fixed}) => {
                       <Link to="/login" className="header-login">
                         LOGIN
                       </Link>
-                      <Link to="/register" className="header-cadastrar">
+                      <Link to="/signin" className="header-cadastrar">
                         CADASTRAR
                       </Link>
                     </div>

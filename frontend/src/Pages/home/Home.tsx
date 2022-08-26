@@ -13,7 +13,8 @@ import Loading from "../../components/UI/loading/Loading";
 import { useState, useEffect } from "react";
 import { CarsInterface, carsQuery } from "../../interfaces/interfaces";
 import Cards from "../../components/table/Card/Cards";
-import CarsService from "../../api/CarsService";
+import CarsService from "../../services/CarsService";
+
 const Home = () => {
   const [data, setData] = useState<any | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -33,6 +34,7 @@ const Home = () => {
   return (
     <>
       {console.log(data)}
+      <Header fixed={true}></Header>
       <MainBanner></MainBanner>
       <Banner img={img1}>
         <h1 className="">title</h1>

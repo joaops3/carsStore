@@ -19,12 +19,13 @@ interface Props {
   data?: UsersInterface;
 }
 
-const [data, setData] = useState<UsersInterface | object>({});
+const FormUser: React.FC<Props> = ({ operation, data }) => {
+  
+// const [data, setData] = useState<UsersInterface | object>({});
 const [nascimento, setNascimento] = useState<Date | null>();
 const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
 const [confirmationError, setConfirmationError] = useState<boolean>(false)
 
-const FormUser: React.FC<Props> = ({ operation, data }) => {
   const {
     handleSubmit,
     getValues,
@@ -58,7 +59,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
     let birthDate = formatDate(new Date(dataClone.nascimento), "yyyy-mm-dd")
     dataClone.nascimento = birthDate
 
-    
+
     
     
 
@@ -92,7 +93,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
             />
             {errors?.name && (
               <Form.Text className="errorsMessage">
-                {errors?.name?.message?.toString()}
+                {errors?.name.message}
               </Form.Text>
             )}
           </Form.Group>
@@ -126,10 +127,10 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
               render={({ field: { onChange, value } }) => (
                 <DatePicker
                   dateFormat={"P"}
-                  value={value.toString()}
+                  value={value}
                   selected={nascimento}
                   onChange={(e) => {
-                    onChange(e), setNascimento(e);
+                    onChange(e); setNascimento(e);
                   }}
                   customInput={<InputMask mask="99/99/9999" />}
                   showDisabledMonthNavigation

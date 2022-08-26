@@ -1,4 +1,4 @@
-import { api } from "./api"
+import { api } from "../api/api"
 import { CarsInterface } from "../interfaces/interfaces"
 import React from 'react'
 
