@@ -1,15 +1,14 @@
 import React from "react";
 import MainProfile from "../../components/profile/MainProfile";
 import { Container, Row, Col } from "react-bootstrap";
+import ProfileRoutes from "./ProfileRoutes";
 
-const UserData = () => {
+const Profile = () => {
   return (
     <MainProfile>
-      <Row className="text-center">
-        <h1>DADOS CADASTRAIS</h1>
-      </Row>
+      <ProfileRoutes></ProfileRoutes>
     </MainProfile>
   );
 };
 
-export default UserData;
+export default Profile;
