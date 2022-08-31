@@ -8,6 +8,7 @@ import SignIn from '../Pages/signIn/SignIn'
 import ProductPage from '../Pages/productsPage/ProductPage'
 import Basket from '../Pages/basket/Basket'
 import Profile from '../Pages/profile/Profile'
+import Private from './Private'
 
 function Router() {
   return (
@@ -19,7 +20,7 @@ function Router() {
     <Route path="/product" element={<ProductPage/>}></Route>
     <Route path="/basket" element={<Basket/>}></Route>
     <Route path="/signin" element={<SignIn/>}></Route>
-    <Route path="/profile/*" element={<Profile/>}></Route>
+    <Route path="/profile/*" element={<Private><Profile/></Private>}></Route>
    </Routes>
    </>
   )

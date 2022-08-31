@@ -1,6 +1,6 @@
 import React from 'react'
 import {Container, Row} from "react-bootstrap"
-import FormProduct from '../../../components/Form/FormProduct'
+import FormProduct from '../../../components/form/FormProduct'
 
 const RegisterCar = () => {
   return (

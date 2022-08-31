@@ -5,6 +5,7 @@ import Edit from './edit/Edit'
 import UserData from "./userdata/UserData"
 import ListCars from './list/ListCars'
 import RegisterCar from './register/RegisterCar'
+import RegisterCard from './register/RegisterCard'
 
 const ProfileRoutes = () => {
   return (
@@ -13,7 +14,7 @@ const ProfileRoutes = () => {
     <Route path="/edit" element={<Edit></Edit>}></Route>
     <Route path="/listcars" element={<ListCars></ListCars>}></Route>
     <Route path="/registercars" element={<RegisterCar/>}></Route>
-    <Route path="/registercard" element={<RegisterCar/>}></Route>
+    <Route path="/registercard" element={<RegisterCard/>}></Route>
    </Routes>
   )
 }

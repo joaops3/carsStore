@@ -1,5 +1,5 @@
 import React from 'react'
-import FormUser from "../../components/Form/FormUser"
+import FormUser from "../../components/form/FormUser"
 import Header from '../../components/header/Header'
 import {Container, Row} from "react-bootstrap"
 
