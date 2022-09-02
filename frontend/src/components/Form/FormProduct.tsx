@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Container,
   Form,
@@ -13,6 +13,7 @@ import { UsersInterface } from "../../interfaces/interfaces";
 import InputMask from "react-input-mask";
 import DatePicker from "react-datepicker";
 import { parseDate, formatDate } from "../../helpers/helpers";
+import {useDropzone} from 'react-dropzone'
 
 interface Props {
   operation: string;
@@ -29,6 +30,13 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
     formState: { errors },
     control,
   } = useForm<UsersInterface>({ defaultValues: data });
+
+  const onDrop = useCallback((acceptedFiles:any) => {
+    // Do something with the files
+  }, [])
+ 
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+  
 
   const submit: SubmitHandler<UsersInterface> = (data) => {};
 
@@ -89,7 +97,7 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
           </Form.Group>
         </Row>
         <Row className="mt-2">
-        <Form.Group as={Col} md={5}>
+          <Form.Group as={Col} md={5}>
             <Form.Label>Ano de Fabricação</Form.Label>
             <Controller
               control={control}
@@ -118,7 +126,7 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
           </Form.Group>
         </Row>
         <Row className="mt-2">
-        <Form.Group as={Col} md={5}>
+          <Form.Group as={Col} md={5}>
             <Form.Label>Preço</Form.Label>
             <Controller
               control={control}
@@ -147,7 +155,7 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
           </Form.Group>
         </Row>
         <Row className="mt-4">
-        <Form.Group as={Col} md={5}>
+          <Form.Group as={Col} md={5}>
             <Form.Label>img</Form.Label>
             <Controller
               control={control}
@@ -174,6 +182,18 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
               </Form.Text>
             )}
           </Form.Group>
+        </Row>
+        <Row className="mt-5">
+       <Col md={6}>
+       <div {...getRootProps()} className="drag">
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p>Arraste os arquivos</p>
+            ) : (
+              <p>Click ou arraste os arquivos</p>
+            )}
+          </div>
+       </Col>
         </Row>
 
         <div className="text-end mt-3">

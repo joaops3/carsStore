@@ -8,9 +8,9 @@ const Basket = () => {
   return (
     <>
     <Header fixed={false}/>
-   <Container>
-   <Row className="products">
-   <Col md={8} className="mt-5">
+   <Container className="">
+   <Row className="products ">
+   <Col md={7} className="mt-5 mx-3 bg-login">
     <Row><h2>Seus Produtos: </h2></Row>
    <BasketItem name_car={""} Carimgs={[]} price={20} model={""} year={20}></BasketItem>
     </Col>

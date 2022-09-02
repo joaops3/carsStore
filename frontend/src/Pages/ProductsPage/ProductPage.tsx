@@ -26,14 +26,25 @@ const ProductPage = () => {
   ];
 
   const handleCep = async () => {
-    if(cep ===""){
-      return
+    if (cep === "") {
+      return;
     }
-    const cepStg = onlyNumbers(cep)
-   await UserService().getCep(cepStg)
-   .then((response: any) => {return response.data})
-   .then((data)=> {setAdress({...adress, street: data.logradouro, neighborhood: data.bairro, city: data.localidade, state: data.uf })})
-  }
+    const cepStg = onlyNumbers(cep);
+    await UserService()
+      .getCep(cepStg)
+      .then((response: any) => {
+        return response.data;
+      })
+      .then((data) => {
+        setAdress({
+          ...adress,
+          street: data.logradouro,
+          neighborhood: data.bairro,
+          city: data.localidade,
+          state: data.uf,
+        });
+      });
+  };
 
   return (
     <>
@@ -65,7 +76,14 @@ const ProductPage = () => {
                     ></InputMask>
                   </Col>
                   <Col sm={4}>
-                    <Button className="ml-3" onClick={() => {handleCep()}}>Procurar</Button>
+                    <Button
+                      className="ml-3"
+                      onClick={() => {
+                        handleCep();
+                      }}
+                    >
+                      Procurar
+                    </Button>
                   </Col>
                 </Row>
                 <Row className="mt-1">
@@ -77,6 +95,15 @@ const ProductPage = () => {
                     <span>{adress.city}</span>{" "}
                     <span className="ml-1">{adress.state}</span>
                   </div>
+                  {adress.street !== "" ? (
+                    <div>
+                      <span>
+                        FRETE: <span style={{ color: "green" }}>GRATIS!!!</span>
+                      </span>{" "}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </Row>
               </Col>
               <Col></Col>

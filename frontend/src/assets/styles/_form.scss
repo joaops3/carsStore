@@ -66,4 +66,21 @@
   font-size: 4rem;
  }
 
+
+
 }
+
+.drag{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.3rem;
+  outline: 1px dashed rgb(56, 56, 56);
+  font-weight: bold;
+
+  &:hover{
+    outline: 2px dashed rgb(0, 0, 0);
+    cursor: pointer;
+  }
+
+ }
