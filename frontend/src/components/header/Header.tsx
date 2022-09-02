@@ -13,6 +13,7 @@ interface Props {
 const Header: React.FC<Props> = ({fixed}) => {
   const isLogged = false;
   const [colorHeader, setColorHeader] = useState<boolean>(false);
+  const [headerClass, setHeaderClass] = useState<string>("header")
 
 
   const showHeader = () => {
@@ -34,7 +35,9 @@ const Header: React.FC<Props> = ({fixed}) => {
   
 
   useEffect(()=> {
-   
+    if(fixed){
+      setHeaderClass("header-fixed")
+    }
     return ()=> window.addEventListener("scroll", showHeader)
   },[])
   
@@ -43,7 +46,7 @@ const Header: React.FC<Props> = ({fixed}) => {
     <>
       <header>
         {/* @ts-ignore */}
-        <Navbar className={`header${colorHeader ? "-active": ""} ${fixed ? "": "-bg"}`} fixed={`${fixed ? "top" : ""}`} expand="lg">
+        <Navbar className={`${headerClass}${colorHeader ? "-active" : ""}`} fixed={`${fixed ? "top" : ""}`} expand="lg">
           <Container>
             <Navbar.Brand href="/">
               <img src={Logo} width="150px" alt="logo" />

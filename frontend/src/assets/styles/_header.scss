@@ -10,15 +10,18 @@
 }
 
 .header{
-    background-color: rgba($color: #000000, $alpha: 0.5);
+    background-color: $fotter-bg;
     transition: 0.5s;
 
-    &-bg{
-        background-color: $fotter-bg;
-        .links{
+    .links{  
             @extend %links;
-         }
     }
+  
+}
+
+.header-fixed{
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    transition: 0.5s;
 
     &-active{
         background-color: $fotter-bg;
@@ -31,9 +34,4 @@
     .links{  
             @extend %links;
     }
-    &-user{
-      
-      
-    }
-
 }

@@ -5,6 +5,7 @@
     height: 800px;
     @include flex;
     justify-content: center;
+    filter: grayscale(0.2)
 }
 
 .banner-container{
