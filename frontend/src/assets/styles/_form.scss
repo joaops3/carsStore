@@ -1,30 +1,86 @@
-.errorInput{
-    border-color: red;
-    
+.errorInput {
+  border-color: red;
 }
 
-.p-login{
-    @include flex;
-    justify-content: center;
-    margin-top: 70px;
-    min-height: 80vh;
+.p-login {
+  @include flex;
+  justify-content: center;
+  margin-top: 70px;
+  min-height: 80vh;
 }
 
-.bg-login{
-    background-color: $bg-form;
-    border-radius: 5px;
+.bg-login {
+  background-color: $bg-form;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.7);
 }
 
-.input{
-    border: 1px solid rgb(24, 23, 23);
-    width: 100%;
-    border-radius: 3px;
-    padding: 3px;
+.input {
+  border: none;
+  width: 100%;
+  border-radius: 1px;
+  padding: 3px;
+
+  &:focus {
+    outline: 1px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.login-title {
+  color: $secondary-banner;
+}
+
+.data-container {
+  background-color: white;
+  padding: 7px;
+  .data-title {
+    font-weight: bold;
+  }
+
+  .data-text {
+    font-weight: normal;
+    margin-left: 5px;
+  }
+}
+
+
+.card-container{
+  background-color: rgb(37, 150, 37);
+  max-height:200px ;
+  min-height: 200px;
+  max-width: 350px;
+  min-width: 350px;
+  border-radius: 15px;
+
+  @media(max-width: 700px ) {
+    margin-top: 20px;
+  }
+  
+
+ .text-container{
+  margin: 30% 20%;
+ }
+ .text-card{
+  margin-top: 2px;
+  font-size: 4rem;
+ }
+
 
 
 }
 
-.login-title{
-    color: $secondary-banner;
-}
+.drag{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.3rem;
+  outline: 1px dashed rgb(56, 56, 56);
+  font-weight: bold;
 
+  &:hover{
+    outline: 2px dashed rgb(0, 0, 0);
+    cursor: pointer;
+  }
+
+ }

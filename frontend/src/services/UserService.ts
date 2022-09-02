@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react'
 import { api} from "../api/api"
 import { UsersInterface, CardsInterface } from '../interfaces/interfaces'
@@ -50,9 +51,18 @@ const UserService = () => {
         }
      }
 
+     const getCep =  async(cep: string) => {
+      try{ 
+       const request = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+       return request
+      }catch(e){
+       return e
+      }
+   }
 
 
-  return {setUser, getUser, updateUser, deleteUser}
+
+  return {setUser, getUser, updateUser, deleteUser, getCep}
 }
 
 export default UserService

@@ -14,7 +14,7 @@ const MainProfile: React.FC<MainProfileInterface> = ({ children }) => {
       <div className={"w-100 d-flex"}>
         <SideBar></SideBar>
         <Col sm={6} className={"flex-fill"}>
-          <Container>
+          <Container className="py-3 px-5">
           {children}
           </Container>
         </Col>

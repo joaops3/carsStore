@@ -1,8 +1,8 @@
 import React from 'react'
-import FormUser from "../../components/Form/FormUser"
+import FormUser from "../../../components/form/FormUser"
 import {Container, Row} from "react-bootstrap"
 
-const editData = () => {
+const Edit = () => {
   return (
    <>
     <Container fluid>
@@ -13,4 +13,4 @@ const editData = () => {
   )
 }
 
-export default editData
+export default Edit

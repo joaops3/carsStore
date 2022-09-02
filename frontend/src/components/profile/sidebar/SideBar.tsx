@@ -10,20 +10,20 @@ interface MainProfileInterface {
 }
 
 const SideBar: React.FC = () => {
-  const admin = false
+  const admin = true
   return (
     <>
       <Col sm={2} className="sidebar d-flex flex-column align-items-center ">
-        <SideBarIcon href="#" icon={<AiOutlineUserAdd size={30} />}>
+        <SideBarIcon href="/profile/" icon={<AiOutlineUserAdd size={30} />}>
           Dados Cadastrais
         </SideBarIcon>
-        <SideBarIcon href="#" icon={<AiOutlineCar size={30} />}>
+        <SideBarIcon href="/profile/listcars" icon={<AiOutlineCar size={30} />}>
           Ver Meus veiculos
         </SideBarIcon>
-        <SideBarIcon href="#" icon={<BiCreditCard size={30} />}>
+        <SideBarIcon href="/profile/registercard" icon={<BiCreditCard size={30} />}>
           Cadastrar Cartao
         </SideBarIcon>
-        {admin && ( <SideBarIcon href="#" icon={<AiOutlineFileAdd size={30} />}>
+        {admin && ( <SideBarIcon href="/profile/registercars" icon={<AiOutlineFileAdd size={30} />}>
           Cadastrar Veiculo
         </SideBarIcon>)}
       </Col>

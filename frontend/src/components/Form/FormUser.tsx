@@ -12,7 +12,7 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { UsersInterface } from "../../interfaces/interfaces";
 import InputMask from "react-input-mask";
 import DatePicker from "react-datepicker";
-import {parseDate, formatDate} from "../../helpers/helpers"
+import { parseDate, formatDate } from "../../helpers/helpers";
 
 interface Props {
   operation: string;
@@ -20,11 +20,10 @@ interface Props {
 }
 
 const FormUser: React.FC<Props> = ({ operation, data }) => {
-  
-// const [data, setData] = useState<UsersInterface | object>({});
-const [nascimento, setNascimento] = useState<Date | null>();
-const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
-const [confirmationError, setConfirmationError] = useState<boolean>(false)
+  // const [data, setData] = useState<UsersInterface | object>({});
+  const [nascimento, setNascimento] = useState<Date | null>();
+  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
+  const [confirmationError, setConfirmationError] = useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -50,28 +49,22 @@ const [confirmationError, setConfirmationError] = useState<boolean>(false)
   );
 
   const submit: SubmitHandler<UsersInterface> = (data) => {
-    if(data.password !== passwordConfirmation){
-      setConfirmationError(true)
-      return
+    if (data.password !== passwordConfirmation) {
+      setConfirmationError(true);
+      return;
     }
-    let dataClone = Object.assign({}, data)
+    let dataClone = Object.assign({}, data);
 
-    let birthDate = formatDate(new Date(dataClone.nascimento), "yyyy-mm-dd")
-    dataClone.nascimento = birthDate
-
-
-    
-    
-
-
+    let birthDate = formatDate(new Date(dataClone.nascimento), "yyyy-mm-dd");
+    dataClone.nascimento = birthDate;
   };
 
   return (
     <Container className="mt-5">
       <Form className="bg-login p-4" onSubmit={handleSubmit(submit)}>
         <Row>
-          <Form.Group as={Col} md={3}>
-            <Form.Label>name</Form.Label>
+          <Form.Group as={Col} md={5}>
+            <Form.Label>Name</Form.Label>
             <Controller
               control={control}
               name={"name"}
@@ -97,7 +90,7 @@ const [confirmationError, setConfirmationError] = useState<boolean>(false)
               </Form.Text>
             )}
           </Form.Group>
-          <Form.Group as={Col} md={3}>
+          <Form.Group as={Col} md={5}>
             <Form.Label>Email</Form.Label>
             <Controller
               name="email"
@@ -106,6 +99,8 @@ const [confirmationError, setConfirmationError] = useState<boolean>(false)
                 <InputMask
                   type="email"
                   mask=""
+                  className="input"
+                  placeholder="Email"
                   value={value}
                   defaultValue={getValues("email")}
                   onChange={(e) => onChange(e)}
@@ -119,7 +114,9 @@ const [confirmationError, setConfirmationError] = useState<boolean>(false)
               </Form.Text>
             )}
           </Form.Group>
-          <Form.Group as={Col} md={3}>
+        </Row>
+        <Row>
+          <Form.Group as={Col} md={5} className="mt-2">
             <Form.Label>Nascimento</Form.Label>
             <Controller
               name="nascimento"
@@ -129,12 +126,15 @@ const [confirmationError, setConfirmationError] = useState<boolean>(false)
                   dateFormat={"P"}
                   value={value}
                   selected={nascimento}
+                  className="input"
                   onChange={(e) => {
-                    onChange(e); setNascimento(e);
+                    onChange(e);
+                    setNascimento(e);
                   }}
-                  customInput={<InputMask mask="99/99/9999" />}
+                  customInput={
+                    <InputMask mask="99/99/9999" placeholder="dd/mm/yyyy" />
+                  }
                   showDisabledMonthNavigation
-                  className="form-control"
                   autoComplete="off"
                   dropdownMode="select"
                   showMonthDropdown
@@ -152,7 +152,7 @@ const [confirmationError, setConfirmationError] = useState<boolean>(false)
           </Form.Group>
         </Row>
         <Row>
-          <Form.Group as={Col} md={3}>
+          <Form.Group as={Col} md={5} className="mt-2">
             <Form.Label>Password</Form.Label>
             <Controller
               name="password"
@@ -166,6 +166,8 @@ const [confirmationError, setConfirmationError] = useState<boolean>(false)
                   <InputMask
                     type="password"
                     mask=""
+                    className="input"
+                    placeholder="password"
                     value={value}
                     defaultValue={getValues("password")}
                     onChange={(e) => onChange(e)}
@@ -176,22 +178,26 @@ const [confirmationError, setConfirmationError] = useState<boolean>(false)
             />
           </Form.Group>
         </Row>
-        <Row>
-          <Form.Group>
+        <Row className="mt-2">
+          <Form.Group as={Col} md={5} clasName="">
             <Form.Label>Comfirmação de senha</Form.Label>
             <Form.Control
               type="password"
               value={passwordConfirmation}
+              bsPrefix="custom-class"
+              className="input"
               onChange={(e) => {
                 setPasswordConfirmation(e.target.value);
               }}
             ></Form.Control>
-         { confirmationError &&  <Form.Text>As senhas não são iguais</Form.Text>}
+            {confirmationError && (
+              <Form.Text>As senhas não são iguais</Form.Text>
+            )}
           </Form.Group>
         </Row>
-        <Row>
-          <Button type="submit"></Button>
-        </Row>
+        <div className="text-end mt-3">
+          <Button type="submit">Salvar</Button>
+        </div>
       </Form>
     </Container>
   );
