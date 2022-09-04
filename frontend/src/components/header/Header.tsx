@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({fixed}) => {
-  const isLogged = false;
+  const isLogged = true;
   const [colorHeader, setColorHeader] = useState<boolean>(false);
   const [headerClass, setHeaderClass] = useState<string>("header")
 
@@ -77,7 +77,7 @@ const Header: React.FC<Props> = ({fixed}) => {
               <Nav>
                 {isLogged ? (
                   <>
-                    <Nav.Link href="#action5" className="links">
+                    <Nav.Link href="/basket" className="links">
                       <BsFillBasketFill size={25} />
                     </Nav.Link>
                     <NavDropdown
@@ -85,11 +85,11 @@ const Header: React.FC<Props> = ({fixed}) => {
                       title={<BiUserCircle size={30} className="links" />}
                       id="navbarScrollingDropdown"
                     >
-                      <NavDropdown.Item href="#action6">
+                      <NavDropdown.Item href="/profile">
                         Perfil
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="#action7">
-                        Logout
+                      <NavDropdown.Item href="#">
+                       <div onClick={() => {}}> Logout</div>
                       </NavDropdown.Item>
                     </NavDropdown>
                   </>

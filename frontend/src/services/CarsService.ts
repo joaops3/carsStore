@@ -6,14 +6,13 @@ import React from 'react'
 const CarsService = () => {
 
   const getCars = async (page?: number, limit?: number) => {
+    console.log("pege", page, limit)
     try {
       let request
-      if (page && limit) {
-        request = await api.get(`/cars?page=${page}&limit=${limit}`)
-      } else {
-        request = await api.get(`/cars`)
-      }
-      return request.data
+     
+    
+        request = await api.get(`/car?page=${page}&limit=${limit}`)
+        return request.data
     } catch (e) {
       console.log(e)
       return null

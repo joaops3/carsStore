@@ -7,14 +7,14 @@ const ListCars = () => {
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   return (
-    <Container fluid className="bg-login">
+    <Container fluid className="">
       <Row className="text-center">
         <h1>Meus Veículos</h1>
       </Row>
       {isLoading ? (
         <Loading />
       ) : (
-        <Row>
+        <Row className="bg-login p-4">
           {data !== undefined &&
             data.cars.rows.map((card: any, index: number) => {
               return (

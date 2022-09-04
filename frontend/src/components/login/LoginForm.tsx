@@ -4,19 +4,23 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Toast from "../../components/toast/Toast";
 import { Context } from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const { login } = useContext(Context);
+  const navigate = useNavigate()
 
-  const handleLogin = (email: string, password: string) => {
-    login(email, password)
-      .then((e: any) => {
-        toast.success("Login feito com sucesso");
-      })
-      .catch((e: any) => {
-        toast.error("ERROR");
-      });
+  const handleLogin = () => {
+    console.log("dsds")
+    navigate("/profile")
+    // login(email, password)
+    //   .then((e: any) => {
+    //     toast.success("Login feito com sucesso");
+    //   })
+    //   .catch((e: any) => {
+    //     toast.error("ERROR");
+    //   });
   };
   return (
     <>
@@ -41,7 +45,7 @@ const LoginForm: React.FC = () => {
                 sm={12}
                 className="d-flex align-items-center justify-content-center pt-2"
               >
-                <Button bsPrefix="custom-class" className="header-cadastrar">
+                <Button bsPrefix="custom-class" className="header-cadastrar" onClick={() => {handleLogin()}}>
                   LOGAR
                 </Button>
               </Form.Group>

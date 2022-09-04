@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Header from "../../components/header/Header";
 import MainBanner from "../../components/banner/MainBanner";
 import Banner from "../../components/banner/Banner";
@@ -16,24 +16,32 @@ import Cards from "../../components/table/Card/Cards";
 import CarsService from "../../services/CarsService";
 
 const Home = () => {
-  const [data, setData] = useState<any | undefined>(undefined);
+  const [data, setData] = useState<carsQuery | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalItems, setTotalItems] = useState<number>(0);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(6);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
 
   const handlePageChange = (currentPage: number) => {
     setCurrentPage(currentPage);
+    console.log(currentPage)
   };
 
+  const getCars = useCallback(()=>{
+    CarsService().getCars(currentPage, itemsPerPage).then((data) => {setData(data); 
+      setTotalItems(data.count);
+      setLoading(false) })
+    console.log(currentPage)
+  },[])
+
   useEffect(() => {
-    CarsService().getCars().then((data) => {setData(data)})
+    getCars()
     
-  }, []);
+  }, [getCars, currentPage]);
   
   return (
     <>
-      {console.log(data)}
+      {console.log("my data here",data)}
       <Header fixed={true}></Header>
       <MainBanner></MainBanner>
       <Banner img={img1}>
@@ -56,7 +64,7 @@ const Home = () => {
           <SearchBar></SearchBar>
           <MainSideBar></MainSideBar>
           <Col>
-            {/* {loading ? (
+            {loading ? (
               <Loading></Loading>
             ) : (
               <Table
@@ -64,7 +72,7 @@ const Home = () => {
                 itemsPerPage={itemsPerPage}
                 handlePageChange={(e) => handlePageChange(e)}
               ></Table>
-            )} */}
+            )}
           </Col>
         </Row>
       </Container>

@@ -13,7 +13,7 @@ const SideBar: React.FC = () => {
   const admin = true
   return (
     <>
-      <Col sm={2} className="sidebar d-flex flex-column align-items-center ">
+      <Col sm={2} className="sidebar d-flex flex-column align-items-center">
         <SideBarIcon href="/profile/" icon={<AiOutlineUserAdd size={30} />}>
           Dados Cadastrais
         </SideBarIcon>

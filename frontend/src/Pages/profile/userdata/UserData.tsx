@@ -6,6 +6,7 @@ import { formatDate } from "../../../helpers/helpers";
 const UserData = () => {
   return (
     <>
+      <Container  className="bg-login py-2 px-4">
       <h1 className="text-center">Dados do usuario</h1>
       <Row className="my-4 d-flex justify-content-end">
         <Col sm={3}>
@@ -14,8 +15,7 @@ const UserData = () => {
           </Link>
         </Col>
       </Row>
-      <Container fluid className=" bg-login py-2 px-4">
-        <Row className={"mt-2"}>
+        <Row className={"mt-2 "}>
           <Col md={4} className={"mt-3 data-container"}>
             <div className="data-title">
               Name:
