@@ -1,6 +1,6 @@
 export interface CarsInterface {
-
-    name_car: string
+    id?: number,
+    name_car: string,
     model: string,
     year: number,
     price: number,
@@ -34,7 +34,7 @@ export interface UsersInterface {
     name: string,
     email: string, 
     nascimento: string,
-    admin: boolean,
-    password: string
+    admin?: boolean,
+    password?: string
     cards?: CardsInterface[]
 }

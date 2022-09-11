@@ -15,6 +15,7 @@ const AuthProvider: React.FC<Props> = ({children}) => {
 
   const login = async(email:string, password:string) => { 
     const data = await loginRequest(email, password)
+    
     if(data){
       setToken(data)
       setIsLogged(true)
@@ -28,10 +29,12 @@ const AuthProvider: React.FC<Props> = ({children}) => {
 
   useEffect(()=> {
     const user = getToken()
+   
     if(user){
+      
       setIsLogged(true)
     }
-  }, [])
+  }, [user])
 
   return (
    <Context.Provider value={{isLogged, login, logout}}>

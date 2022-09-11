@@ -9,36 +9,49 @@ import {
   OverlayTrigger,
 } from "react-bootstrap";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { UsersInterface } from "../../interfaces/interfaces";
+import { CardsInterface } from "../../interfaces/interfaces";
 import InputMask from "react-input-mask";
 import DatePicker from "react-datepicker";
 import { parseDate, formatDate } from "../../helpers/helpers";
+import UserService from "../../services/UserService";
+import Toast from "../toast/Toast"
+import {toast} from "react-toastify"
+import {useParams} from "react-router-dom"
 
 interface Props {
   operation: string;
-  data?: UsersInterface;
+  data?: CardsInterface;
 }
 
 const FormCard: React.FC<Props> = ({ operation, data }) => {
   // const [data, setData] = useState<UsersInterface | object>({});
-
+  const [number, setNumber] = useState<string>("")
+  const param = useParams()
+  const {id} = param
   const {
     handleSubmit,
     getValues,
     setValue,
     formState: { errors },
     control,
-  } = useForm<UsersInterface>({ defaultValues: data });
+  } = useForm<CardsInterface>({ defaultValues: data });
 
-  const submit: SubmitHandler<UsersInterface> = (data) => {};
+  const submit: SubmitHandler<CardsInterface> = async (data) => {
+    let dataClone = Object.assign({}, data);
+    
+    if(id){
+
+      await UserService().registerCard(id, dataClone).then((response) => {toast.success("Cartao cadastrado com sucesso")}).catch(e => {console.log(e); toast.error("error no cadastro")})
+    }
+  };
 
   return (
     <Container className="mt-5">
       <Form className="bg-login p-4" onSubmit={handleSubmit(submit)}>
         <Row>
           <Col md={6}>
-            <Row>
-              <Form.Group as={Col} md={12}>
+           {/*   <Row>
+             <Form.Group as={Col} md={12}>
                 <Form.Label>Name</Form.Label>
                 <Controller
                   control={control}
@@ -94,32 +107,33 @@ const FormCard: React.FC<Props> = ({ operation, data }) => {
                   </Form.Text>
                 )}
               </Form.Group>
-            </Row>
+            </Row> */}
             <Row className="mt-2">
               <Form.Group as={Col} md={12}>
                 <Form.Label>Numero Cartão</Form.Label>
                 <Controller
                   control={control}
-                  name={"name"}
+                  name={"card_number"}
                   render={({ field: { onChange, value } }) => (
                     <InputMask
                       id={"name"}
                       className={"input"}
                       type="text"
-                      mask=""
-                      placeholder="Nome"
+                      mask="9999 9999 9999 9999"
+                      placeholder="9999 9999 9999 9999"
                       value={value}
-                      defaultValue={getValues("name")}
+                      defaultValue={getValues("card_number")}
                       onChange={(e) => {
                         onChange(e);
+                        ; setNumber(e.target.value)
                       }}
                     />
                   )}
                   rules={{ required: "O nome é obrigatorio", maxLength: 50 }}
                 />
-                {errors?.name && (
+                {errors?.card_number && (
                   <Form.Text className="errorsMessage">
-                    {errors?.name.message}
+                    {errors?.card_number.message}
                   </Form.Text>
                 )}
               </Form.Group>
@@ -129,16 +143,16 @@ const FormCard: React.FC<Props> = ({ operation, data }) => {
                 <Form.Label>Codigo</Form.Label>
                 <Controller
                   control={control}
-                  name={"name"}
+                  name={"card_code"}
                   render={({ field: { onChange, value } }) => (
                     <InputMask
                       id={"name"}
                       className={"input"}
                       type="text"
-                      mask=""
-                      placeholder="Nome"
+                      mask="999"
+                      placeholder="999"
                       value={value}
-                      defaultValue={getValues("name")}
+                      defaultValue={getValues("card_code")}
                       onChange={(e) => {
                         onChange(e);
                       }}
@@ -146,19 +160,19 @@ const FormCard: React.FC<Props> = ({ operation, data }) => {
                   )}
                   rules={{ required: "O nome é obrigatorio", maxLength: 50 }}
                 />
-                {errors?.name && (
+                {errors?.card_code && (
                   <Form.Text className="errorsMessage">
-                    {errors?.name.message}
+                    {errors?.card_code.message}
                   </Form.Text>
                 )}
               </Form.Group>
             </Row>
-            <Row className="mt-2">
+            {/* <Row className="mt-2">
               <Form.Group as={Col} md={12}>
                 <Form.Label>Data de validade</Form.Label>
                 <Controller
                   control={control}
-                  name={"name"}
+                  name={"card_date"}
                   render={({ field: { onChange, value } }) => (
                     <InputMask
                       id={"name"}
@@ -167,7 +181,7 @@ const FormCard: React.FC<Props> = ({ operation, data }) => {
                       mask=""
                       placeholder="Nome"
                       value={value}
-                      defaultValue={getValues("name")}
+                      defaultValue={getValues("card_date")}
                       onChange={(e) => {
                         onChange(e);
                       }}
@@ -175,18 +189,18 @@ const FormCard: React.FC<Props> = ({ operation, data }) => {
                   )}
                   rules={{ required: "O nome é obrigatorio", maxLength: 50 }}
                 />
-                {errors?.name && (
+                {errors?.card_date && (
                   <Form.Text className="errorsMessage">
-                    {errors?.name.message}
+                    {errors?.card_date.message}
                   </Form.Text>
                 )}
               </Form.Group>
-            </Row>
+            </Row> */}
           </Col>
           <Col md={6} className="d-flex justify-content-center">
             <div className="card-container">
               <div className="text-container">
-                <div className="card-text">2222 2222 2222 2222</div>
+                <div className="card-text">{number}</div>
                 <div className="card-text">Napoleao Bonapart</div>
               </div>
             </div>

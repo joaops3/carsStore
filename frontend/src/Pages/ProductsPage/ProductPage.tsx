@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import CarouselMinimal from "../../components/carousel/CarouselMinimal";
 import { Container, Col, Row, Button, Form } from "react-bootstrap";
 import Header from "../../components/header/Header";
@@ -7,23 +7,28 @@ import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import InputMask from "react-input-mask";
 import UserService from "../../services/UserService";
 import { onlyNumbers } from "../../helpers/helpers";
+import { toast } from "react-toastify";
+import { CarsInterface } from "../../interfaces/interfaces";
+import CarsService from "../../services/CarsService";
+
 const initialState = { street: "", neighborhood: "", city: "", state: "" };
 const ProductPage = () => {
   const param = useParams();
   const [cep, setCep] = useState<string>("");
   const [adress, setAdress] = useState({ ...initialState });
-  const data = [
-    {
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg",
-      caption: ``,
-    },
-    {
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg",
-      caption: ``,
-    },
-  ];
+  const [data, setData] = useState<CarsInterface | undefined>()
+
+ const getData = useCallback(async () => {
+      if(param.id){
+        await CarsService().getCarsId(param.id).then((data)=> {setData(data)}).catch(e => {console.log(e)})
+      }
+    }, [])
+
+
+  useEffect(()=> {
+    getData()
+  }, [getData, ])
+ 
 
   const handleCep = async () => {
     if (cep === "") {
@@ -48,11 +53,12 @@ const ProductPage = () => {
 
   return (
     <>
+    {console.log(data)}
       <Header fixed={false} />
       <Container>
         <Row className="products">
           <Col md={8}>
-            <CarouselMinimal data={data}></CarouselMinimal>
+           {data?.Carimgs &&  (<CarouselMinimal data={data.Carimgs}></CarouselMinimal>)}
           </Col>
           <Col md={4} className="mt-5">
             <Row className="text-center">
@@ -110,8 +116,11 @@ const ProductPage = () => {
             </Row>
 
             <Row className="mt-2">
-              <Button>
-                {" "}
+              <Button
+                onClick={() => {
+                  toast.success("Item adicionado ao carrinho com sucesso");
+                }}
+              >
                 <MdOutlineLocalGroceryStore /> Adicionar ao Carrinho
               </Button>
             </Row>
@@ -120,7 +129,6 @@ const ProductPage = () => {
         <Row className="mt-5 p-3">
           <Row className="py-5">
             <Row>
-              {" "}
               <h3>Informações</h3>
             </Row>
             <Row>

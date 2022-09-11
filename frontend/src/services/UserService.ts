@@ -62,7 +62,7 @@ const UserService = () => {
 
 
 
-  return {setUser, getUser, updateUser, deleteUser, getCep}
+  return {setUser, getUser, updateUser, deleteUser, getCep, registerCard}
 }
 
 export default UserService

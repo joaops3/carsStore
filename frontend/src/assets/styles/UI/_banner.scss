@@ -16,6 +16,7 @@
         color: $primary-banner;
         padding-bottom: 200px; 
     }
+    p{width: 70%;}
 }
 
 
@@ -24,5 +25,8 @@
         color: $secondary-banner;
 
     }
+    p,div{background-color: red; 
+        text-align: right;
+        width: 70%;}
 
 }

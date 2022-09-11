@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
 import Button from "../UI/buttons/ButtonHeader";
 import { BiUserCircle } from "react-icons/bi";
 import { BsFillBasketFill } from "react-icons/bs";
 import Logo from "../../assets/logo/logo.svg";
 import { Link } from "react-router-dom";
+import {Context} from "../../context/AuthProvider"
 
 interface Props {
   fixed?: boolean
 }
 
 const Header: React.FC<Props> = ({fixed}) => {
-  const isLogged = true;
+  const {isLogged, logout} = useContext(Context)
   const [colorHeader, setColorHeader] = useState<boolean>(false);
   const [headerClass, setHeaderClass] = useState<string>("header")
 
@@ -89,7 +90,7 @@ const Header: React.FC<Props> = ({fixed}) => {
                         Perfil
                       </NavDropdown.Item>
                       <NavDropdown.Item href="#">
-                       <div onClick={() => {}}> Logout</div>
+                       <div onClick={() => {logout()}}> Logout</div>
                       </NavDropdown.Item>
                     </NavDropdown>
                   </>

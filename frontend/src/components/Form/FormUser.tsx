@@ -13,6 +13,10 @@ import { UsersInterface } from "../../interfaces/interfaces";
 import InputMask from "react-input-mask";
 import DatePicker from "react-datepicker";
 import { parseDate, formatDate } from "../../helpers/helpers";
+import UserService from "../../services/UserService";
+import {useNavigate} from "react-router-dom"
+import Toast from "../../components/toast/Toast";
+import { toast } from "react-toastify";
 
 interface Props {
   operation: string;
@@ -24,6 +28,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
   const [nascimento, setNascimento] = useState<Date | null>();
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [confirmationError, setConfirmationError] = useState<boolean>(false);
+  const navigate: any = useNavigate()
 
   const {
     handleSubmit,
@@ -32,6 +37,13 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
     formState: { errors },
     control,
   } = useForm<UsersInterface>({ defaultValues: data });
+
+  const updateInfo = () => {
+    if(data){
+      setValue("name", data.name);
+
+    }
+  };
 
   const popover = (
     <Popover id="popover-basic">
@@ -48,19 +60,40 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
     </Popover>
   );
 
-  const submit: SubmitHandler<UsersInterface> = (data) => {
-    if (data.password !== passwordConfirmation) {
-      setConfirmationError(true);
-      return;
-    }
+  const submit: SubmitHandler<UsersInterface> = async (data) => {
     let dataClone = Object.assign({}, data);
 
     let birthDate = formatDate(new Date(dataClone.nascimento), "yyyy-mm-dd");
     dataClone.nascimento = birthDate;
+    
+
+    if(operation ==="sign"){
+      if (data.password !== passwordConfirmation) {
+        setConfirmationError(true);
+        return;
+      }
+      setConfirmationError(false)
+      await UserService().setUser(dataClone)
+        .then((res) => {navigate("/login");
+        setValue("name", "")
+        setValue("email", "")
+        setValue("password", "")
+        setValue("nascimento", "")
+        setNascimento(null)
+        setPasswordConfirmation("")
+        toast.success("Conta criada com sucesso ")
+      })
+        .catch(e => {console.log(e)})
+    }else{
+       // await UserService().updateUser(dataClone)
+      //   .then((res) => {navigate("/login")})
+      //   .catch(e => {console.log(e)})
+    }
   };
 
   return (
     <Container className="mt-5">
+      <Toast></Toast>
       <Form className="bg-login p-4" onSubmit={handleSubmit(submit)}>
         <Row>
           <Form.Group as={Col} md={5}>
@@ -151,7 +184,8 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
             )}
           </Form.Group>
         </Row>
-        <Row>
+        {operation === "sign" && (
+        <><Row>
           <Form.Group as={Col} md={5} className="mt-2">
             <Form.Label>Password</Form.Label>
             <Controller
@@ -194,7 +228,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
               <Form.Text>As senhas não são iguais</Form.Text>
             )}
           </Form.Group>
-        </Row>
+        </Row></>)}
         <div className="text-end mt-3">
           <Button type="submit">Salvar</Button>
         </div>

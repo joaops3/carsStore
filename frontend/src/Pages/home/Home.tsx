@@ -17,22 +17,21 @@ import CarsService from "../../services/CarsService";
 
 const Home = () => {
   const [data, setData] = useState<carsQuery | undefined>(undefined);
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(3);
   const [loading, setLoading] = useState<boolean>(true);
 
   const handlePageChange = (currentPage: number) => {
     setCurrentPage(currentPage);
-    console.log(currentPage)
   };
 
-  const getCars = useCallback(()=>{
-    CarsService().getCars(currentPage, itemsPerPage).then((data) => {setData(data); 
-      setTotalItems(data.count);
+  const getCars = useCallback(async ()=>{
+   await CarsService().getCars(currentPage, itemsPerPage).then((data) => {setData(data); 
+      setTotalItems(data.totalItems);
       setLoading(false) })
-    console.log(currentPage)
-  },[])
+
+  },[currentPage])
 
   useEffect(() => {
     getCars()
@@ -41,7 +40,6 @@ const Home = () => {
   
   return (
     <>
-      {console.log("my data here",data)}
       <Header fixed={true}></Header>
       <MainBanner></MainBanner>
       <Banner img={img1}>
@@ -70,6 +68,7 @@ const Home = () => {
               <Table
                 data={data}
                 itemsPerPage={itemsPerPage}
+                totalItems={totalItems}
                 handlePageChange={(e) => handlePageChange(e)}
               ></Table>
             )}
