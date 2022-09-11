@@ -59,7 +59,7 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const getUsersId = async (req: Request, res: Response) => {
-    console.log("meu user", req.user)
+
     const id = req.params.id
 
     const user = await User.findOne({ include: Cards, where: { id }, attributes: {exclude: ["password"]} })
@@ -101,6 +101,7 @@ export const login = async (req: Request, res: Response) => {
         return res.status(422).json({ error: "enviar email e senha" })
     }
     const { email, password } = req.body
+   
     const user = await User.findOne({ where: { email } })
     if (!user) {
         return res.status(422).json({ error: "usuario nao cadastrado no sistema" })
@@ -109,7 +110,8 @@ export const login = async (req: Request, res: Response) => {
     //check password and email
     const checkpassword = await bcrypt.compare(password, user.password)
     if (!checkpassword) {
-        return res.status(422).json({ error: "senha invalida!" })
+        res.status(422).json({ error: "senha invalida!" })
+        return 
     }
 
     const token = await generateToken({ id: user.id, email: user.email })

@@ -19,7 +19,7 @@ export const getCars = async (req: Request, res: Response) => {
     }
 
     //PAGINATION QUERY
-    let offset: number = page ? Number(page) * Number(limit) : 0;
+    let offset: number = page ? ((Number(page) -1) * Number(limit)) : 0;
 
     let totalPages: number = 0
     await Cars.findAndCountAll({ limit: Number(limit), offset: offset, include: { model: Carsimg, attributes: { exclude: ["id", "car_id"] } } })
@@ -83,7 +83,7 @@ export const register = async (req: Request, res: Response) => {
 export const getCarsId = async (req: Request, res: Response) => {
     const { id } = req.params
 
-    const cars = await Cars.findByPk(id).catch(e => console.log(e))
+    const cars = await Cars.findByPk(id, { include: { model: Carsimg, attributes: { exclude: ["id", "car_id"] } } }).catch(e => console.log(e))
     if (!cars) {
         return res.status(400).json({ error: "nenhum carro encontrado" })
     }
