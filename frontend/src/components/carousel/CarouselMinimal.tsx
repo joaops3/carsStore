@@ -10,22 +10,12 @@ interface Props {
 const CarouselMinimal: React.FC<Props> = ({data}) => {
   const [data2, setData ] =  useState<any>([])
 
-   let mydata = [
-    {
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg",
-      caption: ``,
-    },
-    {
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg",
-      caption: ``,
-    },
-  ];
+   let mydata = data.forEach((item : any) => {return { image: item.url}
+   })
+   
     useEffect(()=> {
-   if(data){
-    data.forEach((item: any) => {setData({image: data.url, caption: "x"})})
-   }
+ 
+   
     },[])
   
     const captionStyle = {
@@ -40,8 +30,10 @@ const CarouselMinimal: React.FC<Props> = ({data}) => {
   return (
 
    <>
-      <Carousel
-            data={data2}
+   {console.log("data2",data2)}
+     { mydata && <Carousel
+
+            data={mydata}
             time={20000}
             width="850px"
             height="500px"
@@ -64,7 +56,7 @@ const CarouselMinimal: React.FC<Props> = ({data}) => {
               maxHeight: "500px",
               margin: "40px auto",
             }}
-          />
+          />}
    </>
   )
 }

@@ -1,0 +1,16 @@
+.section-container {
+  img {
+    border-radius: 5px;
+  }
+  h2 {
+    color: $secondary-banner;
+    font-family: $font-title;
+    text-transform: capitalize;
+    font-size: 45px;
+  }
+  p,
+  div {
+    font-family: $font-text;
+    color: rgb(34, 34, 34);
+  }
+}

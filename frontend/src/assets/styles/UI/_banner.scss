@@ -1,32 +1,28 @@
-.bg-img{
-    background-image: url("../../images/main.jpg");
-    background-position: center;
-    background-size: cover;
-    height: 800px;
-    @include flex;
-    justify-content: center;
-    filter: grayscale(0.2)
+.bg-img {
+  background-image: url("../../images/main.jpg");
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  @include flex;
+  justify-content: center;
+  filter: grayscale(0.2);
+
+  @media (max-width: 500px) {
+    background-image: none #000;
+  }
 }
 
-.banner-container{
-    @include flex;
-    justify-content: center;
-
-    h1{
-        color: $primary-banner;
-        padding-bottom: 200px; 
-    }
-    p{width: 70%;}
-}
-
-
-.secondary-banner{
-    h1{ 
-        color: $secondary-banner;
-
-    }
-    p,div{background-color: red; 
-        text-align: right;
-        width: 70%;}
-
+.banner-container {
+  @include flex;
+  justify-content: center;
+  width: 100%;
+  h1 {
+    font-family: $font-roman;
+    color: $primary-banner;
+    padding-bottom: 200px;
+    font-size: 3rem;
+  }
+  p {
+    width: 70%;
+  }
 }

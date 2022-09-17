@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import CarouselMinimal from "../../components/carousel/CarouselMinimal";
-import { Container, Col, Row, Button, Form } from "react-bootstrap";
+import { Container, Col, Row, Button, Form, Image } from "react-bootstrap";
 import Header from "../../components/header/Header";
 import { useParams } from "react-router-dom";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
@@ -11,12 +11,16 @@ import { toast } from "react-toastify";
 import { CarsInterface } from "../../interfaces/interfaces";
 import CarsService from "../../services/CarsService";
 
+interface dataInterface {
+  cars: CarsInterface
+}
+
 const initialState = { street: "", neighborhood: "", city: "", state: "" };
 const ProductPage = () => {
   const param = useParams();
   const [cep, setCep] = useState<string>("");
   const [adress, setAdress] = useState({ ...initialState });
-  const [data, setData] = useState<CarsInterface | undefined>()
+  const [data, setData] = useState< dataInterface | undefined>()
 
  const getData = useCallback(async () => {
       if(param.id){
@@ -53,12 +57,14 @@ const ProductPage = () => {
 
   return (
     <>
-    {console.log(data)}
+  
       <Header fixed={false} />
       <Container>
         <Row className="products">
           <Col md={8}>
-           {data?.Carimgs &&  (<CarouselMinimal data={data.Carimgs}></CarouselMinimal>)}
+           {/* {data?.cars.Carimgs &&  (<CarouselMinimal data={data.cars.Carimgs}></CarouselMinimal>)} */}
+           
+      {/* {  data?.cars.Carimgs &&  ( <Image src={data?.cars.Carimgs[0].url}></Image>)} */}
           </Col>
           <Col md={4} className="mt-5">
             <Row className="text-center">

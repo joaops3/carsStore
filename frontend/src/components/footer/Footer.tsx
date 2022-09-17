@@ -12,16 +12,16 @@ const Footer = () => {
 
             <h4> Mais Informações</h4>
           <Row>
-            <Col md={12}><a href="#">link1</a></Col>
-            <Col md={12}><a href="#">link1</a></Col>
-            <Col md={12}><a href="#">link1</a></Col>
+            <Col md={12}><a href="#">Information</a></Col>
+            <Col md={12}><a href="#">Information</a></Col>
+            <Col md={12}><a href="#">Information</a></Col>
           </Row>
           </Col>
           <Col md={4}> <h4>Ultimas Noticias</h4>
           <Row>
-            <Col md={12}><a href="#">noticia1</a></Col>
-            <Col md={12}><a href="#">noticia2</a></Col>
-            <Col md={12}><a href="#">noticia3</a></Col>
+            <Col md={12}><a href="#">news</a></Col>
+            <Col md={12}><a href="#">news</a></Col>
+            <Col md={12}><a href="#">news</a></Col>
           </Row></Col>
           <Col md={4}> <h4>Sobre Nós</h4>
           <Row>

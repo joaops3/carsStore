@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "default";
 
 @import "sidebar";
 @import "header";
@@ -10,6 +11,7 @@
 @import "form";
 
 @import "products";
+@import "UI/section";
 
 //--------COMPONENTS UI-------
 @import "UI/button";

@@ -210,6 +210,11 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
               )}
               rules={{ required: "A senha é obrigatoria", maxLength: 40 }}
             />
+               {errors.password && (
+              <Form.Text className="errorsMessage">
+                {errors.password?.message}
+              </Form.Text>
+            )}
           </Form.Group>
         </Row>
         <Row className="mt-2">

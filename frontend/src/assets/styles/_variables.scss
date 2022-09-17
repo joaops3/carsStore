@@ -1,4 +1,7 @@
 //butons header
+@import url('https://fonts.googleapis.com/css2?family=Luxurious+Roman&family=PT+Serif:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
+
 $button-login: #900A0A;
 $button-login-hover: #DC2D2D; 
 $button-login-bg: #fff;
@@ -15,3 +18,9 @@ $bg-form: #A9A9A9;
 $fotter-bg: #1A1A1A;
 $footer-titles: #fff;
 $footer-links: #858383;
+
+
+//---------fonts
+$font-title: 'PT Serif', serif;
+$font-roman: 'Luxurious Roman', cursive;
+$font-text: 'Open Sans', sans-serif;

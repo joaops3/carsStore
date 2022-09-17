@@ -40,14 +40,14 @@ const LoginForm: React.FC = () => {
         <Container className="">
           <Form className="d-flex justify-content-center">
             <Col md={5} className="bg-login p-3">
-          <Row className="text-center">   {error && <p>Email ou Senha Invalidos</p>}</Row>
+          <Row className="text-center">   {error && <p className="errorsMessage">Email ou Senha Invalidos</p>}</Row>
               <Form.Group className="text-center fs-2" controlId="">
                 <Form.Label className="login-title">Email</Form.Label>
-                <Form.Control type="text" placeholder="Email" onChange={e => {setEmail(e.target.value)}}></Form.Control>
+                <Form.Control type="text" bsPrefix="custom-class" className="input" placeholder="Email" onChange={e => {setEmail(e.target.value)}}></Form.Control>
               </Form.Group>
               <Form.Group className="text-center fs-2 pt-2" controlId="">
                 <Form.Label className="login-title">Senha</Form.Label>
-                <Form.Control type="text" placeholder="Senha"onChange={e => {setPassword(e.target.value)}} ></Form.Control>
+                <Form.Control type="text" bsPrefix="custom-class" className="input" placeholder="Senha"onChange={e => {setPassword(e.target.value)}} ></Form.Control>
               </Form.Group>
               <Form.Text>
                 <a href="#">Recuperar senha</a>

@@ -10,7 +10,10 @@ body {
   background-color: #f1f1f1;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1,h2,h3,h4,h5,h6{
+  font-family: $font-title;
+  color: $secondary-banner ;
 }
+
+p{ font-family: $font-text;}
+
