@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import Header from "../../components/header/Header";
 import { Link } from "react-router-dom";
@@ -7,27 +7,32 @@ import { addMoneyRealMask } from "../../helpers/helpers";
 import CarsService from "../../services/CarsService";
 import { CarsInterface } from "../../interfaces/interfaces";
 
+interface DataInterface {
+  cars: CarsInterface[]
+}
+
 const Basket = () => {
   const [show, setShow] = useState(false);
   const [user, setUser] = useState<any>(true);
-  const [data, setData] = useState<any>();
-  let basketStr  = localStorage.getItem("basket");
-  let filteredList =  data.cars
-  .filter((item: CarsInterface) => {
-    if (basketStr) {
-      let basket: [{ item: string }] = JSON.parse(basketStr);
-      basket.forEach((basketItem) => {
-        if (Number(basketItem.item) === Number(item.id)) {
-          return item;
-        }
-      })
-    }else{
-      return item
-    }
-  })
+  const [data, setData] = useState<DataInterface>();
+  const [basket, setBasket] = useState(JSON.parse(localStorage.getItem("basket") || ""))
+  const [total, setTotal] = useState<number>(0)
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  let filteredList =  useMemo(() => {
+    return data?.cars.filter((item: CarsInterface)=> {
+      if(basket){
+        if(basket.includes(`${item.id}`)){
+          setTotal((previous) => {return previous + item.price})
+          return item
+        }
+      }else{
+        return null
+      }
+    })
+  }, [data])
+
+ 
+
 
   const getData = useCallback(() => {
     CarsService()
@@ -40,12 +45,22 @@ const Basket = () => {
       });
   }, []);
 
+  const deleteBasket = (e: number) => {
+ 
+    let list = basket
+   
+   list.slice(list.indexOf(`${e}`))
+   
+   localStorage.setItem("basket", list)
+  }
+
   useEffect(() => {
     getData();
   }, [getData]);
   return (
     <>
       {console.log("data here", data)}
+      {console.log("filtro", total)}
       <Header fixed={false} />
       <Container className="">
         <Row className="products ">
@@ -53,16 +68,19 @@ const Basket = () => {
             <Row>
               <h2>Seus Produtos: </h2>
             </Row>
-            {data &&
+            {filteredList &&
              
-                data.map((item: CarsInterface) => {  console.log("sdaasdsa",item); return (
+            filteredList?.map((item: CarsInterface, key: number) => {return (
                 
                   <BasketItem
+                  key={key}
+                  id={item.id}
                     name_car={item.name_car}
                     Carimgs={item.Carimgs}
                     price={item.price}
                     model={item.model}
                     year={item.year}
+                    deleteBasket={deleteBasket}
                   ></BasketItem>
                 )
                 })}
@@ -73,16 +91,11 @@ const Basket = () => {
             </Row>
             <Row>
               <Col sm={12} className={"table"}>
-                <Row>
-                  {" "}
-                  <Col md={8}>
-                    <div>nome produto</div>
-                  </Col>
-                  <Col md={4}>
-                    <div>preço</div>
-                  </Col>
-                </Row>
-                <Row>
+               
+               
+              </Col>
+            </Row>
+            <Row className="my-3">
                   <Col md={8}>
                     <div>FRETE:</div>
                   </Col>
@@ -90,14 +103,12 @@ const Basket = () => {
                     <div style={{ color: "green" }}>GRATIS!!</div>
                   </Col>
                 </Row>
-              </Col>
-            </Row>
             <Row className="my-3">
               <Col md={8}>
                 <div>TOTAL:</div>
               </Col>
               <Col md={4}>
-                <div style={{ color: "green" }}>{addMoneyRealMask(1000)}</div>
+                <div style={{ color: "green" }}>{addMoneyRealMask(total)}</div>
               </Col>
             </Row>
 
@@ -106,7 +117,7 @@ const Basket = () => {
                 bsPrefix="custom-class"
                 className="btn-buy"
                 onClick={() => {
-                  handleShow();
+                  setShow(true)
                 }}
               >
                 {" "}
@@ -115,7 +126,7 @@ const Basket = () => {
             </Row>
           </Col>
         </Row>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={() => setShow(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Finalizar Pedido</Modal.Title>
           </Modal.Header>
@@ -155,7 +166,7 @@ const Basket = () => {
             </Modal.Body>
           )}
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={() =>{setShow(false)}}>
               Cancelar
             </Button>
           </Modal.Footer>

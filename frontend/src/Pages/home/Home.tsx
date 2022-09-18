@@ -64,7 +64,7 @@ const Home = () => {
 
         <Row>
           <SearchBar></SearchBar>
-          <MainSideBar></MainSideBar>
+          <MainSideBar data={data}></MainSideBar>
           <Col>
             {loading ? (
               <Loading></Loading>

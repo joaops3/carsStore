@@ -67,21 +67,23 @@ const ProductPage = () => {
     let currentBasketjson = JSON.parse(currentBasket)
     if(currentBasketjson === null || currentBasketjson === undefined ){
       console.log("ativou if")
-      localStorage.setItem("basket", JSON.stringify([{item: param.id}]))
+      localStorage.setItem("basket", JSON.stringify([ param.id]))
       
     }else{
       let basket: any[] = []
       currentBasketjson.forEach((element: string) => { basket.push(element)})
-      basket.push({item: param.id})
+      basket.push( param.id)
       localStorage.setItem("basket", JSON.stringify(basket))
     }
  
     toast.success("Item adicionado ao carrinho com sucesso")
   }
 
+
+
   return (
     <>
-      {console.log(data?.cars)}
+  
       <Header fixed={false} />
       <Container>
         <Row className="products mt-5">
