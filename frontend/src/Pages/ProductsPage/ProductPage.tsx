@@ -12,27 +12,33 @@ import { CarsInterface } from "../../interfaces/interfaces";
 import CarsService from "../../services/CarsService";
 
 interface dataInterface {
-  cars: CarsInterface
+  cars: CarsInterface;
 }
 
 const initialState = { street: "", neighborhood: "", city: "", state: "" };
+
 const ProductPage = () => {
   const param = useParams();
   const [cep, setCep] = useState<string>("");
   const [adress, setAdress] = useState({ ...initialState });
-  const [data, setData] = useState< dataInterface | undefined>()
+  const [data, setData] = useState<dataInterface | undefined>();
 
- const getData = useCallback(async () => {
-      if(param.id){
-        await CarsService().getCarsId(param.id).then((data)=> {setData(data)}).catch(e => {console.log(e)})
-      }
-    }, [])
+  const getData = useCallback(async () => {
+    if (param.id) {
+      await CarsService()
+        .getCarsId(param.id)
+        .then((data) => {
+          setData(data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, []);
 
-
-  useEffect(()=> {
-    getData()
-  }, [getData, ])
- 
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   const handleCep = async () => {
     if (cep === "") {
@@ -55,16 +61,36 @@ const ProductPage = () => {
       });
   };
 
+  const submit = () => {
+    let basket: any[] = []
+    let currentBasket: any = localStorage.getItem("basket")
+    let currentBasketjson = JSON.parse(currentBasket)
+    if(currentBasketjson === null || currentBasketjson === undefined ){
+      console.log("ativou if")
+      localStorage.setItem("basket", JSON.stringify([{item: param.id}]))
+      
+    }else{
+      let basket: any[] = []
+      currentBasketjson.forEach((element: string) => { basket.push(element)})
+      basket.push({item: param.id})
+      localStorage.setItem("basket", JSON.stringify(basket))
+    }
+ 
+    toast.success("Item adicionado ao carrinho com sucesso")
+  }
+
   return (
     <>
-  
+      {console.log(data?.cars)}
       <Header fixed={false} />
       <Container>
-        <Row className="products">
+        <Row className="products mt-5">
           <Col md={8}>
-           {/* {data?.cars.Carimgs &&  (<CarouselMinimal data={data.cars.Carimgs}></CarouselMinimal>)} */}
-           
-      {/* {  data?.cars.Carimgs &&  ( <Image src={data?.cars.Carimgs[0].url}></Image>)} */}
+            {data?.cars.Carimgs && (
+              <CarouselMinimal data={data?.cars.Carimgs}></CarouselMinimal>
+            )}
+
+            {/* {  data?.cars.Carimgs &&  ( <Image src={data?.cars.Carimgs[0].url}></Image>)} */}
           </Col>
           <Col md={4} className="mt-5">
             <Row className="text-center">
@@ -123,8 +149,8 @@ const ProductPage = () => {
 
             <Row className="mt-2">
               <Button
-                onClick={() => {
-                  toast.success("Item adicionado ao carrinho com sucesso");
+                onClick={() => {submit()
+               
                 }}
               >
                 <MdOutlineLocalGroceryStore /> Adicionar ao Carrinho
@@ -132,8 +158,8 @@ const ProductPage = () => {
             </Row>
           </Col>
         </Row>
-        <Row className="mt-5 p-3">
-          <Row className="py-5">
+        <Row className="ml-1 mt-10 bg-login p-3">
+          <Row className="py-6">
             <Row>
               <h3>Informações</h3>
             </Row>

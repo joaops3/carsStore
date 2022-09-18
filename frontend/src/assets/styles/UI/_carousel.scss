@@ -1,0 +1,12 @@
+.carousel-container{
+
+    img{
+        border-radius: 5px;
+        box-shadow: 0 0 3px rgba(109, 109, 109, 0.7);
+        &:hover{
+            outline: 0.2px solid black;
+
+            cursor: pointer;
+        }
+    }
+}

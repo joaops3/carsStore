@@ -1,18 +1,51 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import Header from "../../components/header/Header";
 import { Link } from "react-router-dom";
 import BasketItem from "./BasketItem";
 import { addMoneyRealMask } from "../../helpers/helpers";
+import CarsService from "../../services/CarsService";
+import { CarsInterface } from "../../interfaces/interfaces";
 
 const Basket = () => {
   const [show, setShow] = useState(false);
   const [user, setUser] = useState<any>(true);
+  const [data, setData] = useState<any>();
+  let basketStr  = localStorage.getItem("basket");
+  let filteredList =  data.cars
+  .filter((item: CarsInterface) => {
+    if (basketStr) {
+      let basket: [{ item: string }] = JSON.parse(basketStr);
+      basket.forEach((basketItem) => {
+        if (Number(basketItem.item) === Number(item.id)) {
+          return item;
+        }
+      })
+    }else{
+      return item
+    }
+  })
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const getData = useCallback(() => {
+    CarsService()
+      .getAllCars()
+      .then((data) => {
+        setData(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
   return (
     <>
+      {console.log("data here", data)}
       <Header fixed={false} />
       <Container className="">
         <Row className="products ">
@@ -20,13 +53,19 @@ const Basket = () => {
             <Row>
               <h2>Seus Produtos: </h2>
             </Row>
-            <BasketItem
-              name_car={""}
-              Carimgs={[]}
-              price={20}
-              model={""}
-              year={20}
-            ></BasketItem>
+            {data &&
+             
+                data.map((item: CarsInterface) => {  console.log("sdaasdsa",item); return (
+                
+                  <BasketItem
+                    name_car={item.name_car}
+                    Carimgs={item.Carimgs}
+                    price={item.price}
+                    model={item.model}
+                    year={item.year}
+                  ></BasketItem>
+                )
+                })}
           </Col>
           <Col md={4} className="mt-5">
             <Row>

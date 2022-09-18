@@ -6,12 +6,21 @@ import React from 'react'
 const CarsService = () => {
 
   const getCars = async (page?: number, limit?: number) => {
-    console.log("pege", page, limit)
+   
     try {
       let request
-     
-    
         request = await api.get(`/car?page=${page}&limit=${limit}`)
+        return request.data
+    } catch (e) {
+      console.log(e)
+      return null
+    }
+  }
+  const getAllCars = async () => {
+   
+    try {
+      let request
+        request = await api.get(`/car`)
         return request.data
     } catch (e) {
       console.log(e)
@@ -56,7 +65,7 @@ const CarsService = () => {
     }
   }
 
-  return { getCars, getCarsId, setCars, updateCars, deleteCars }
+  return { getCars, getAllCars, getCarsId, setCars, updateCars, deleteCars }
 }
 
 export default CarsService
