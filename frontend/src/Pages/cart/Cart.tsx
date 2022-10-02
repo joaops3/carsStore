@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState, useContext } from "react";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import Header from "../../components/header/Header";
 import { Link } from "react-router-dom";
-import BasketItem from "./BasketItem";
+import BasketItem from "./CartItem";
 import { addMoneyRealMask } from "../../helpers/helpers";
 import CarsService from "../../services/CarsService";
 import { CarsInterface } from "../../interfaces/interfaces";
-
+import {CartContext} from "../../context/CartProvider"
 interface DataInterface {
   cars: CarsInterface[]
 }
@@ -14,26 +14,22 @@ interface DataInterface {
 const Basket = () => {
   const [show, setShow] = useState(false);
   const [user, setUser] = useState<any>(true);
-  const [data, setData] = useState<DataInterface>();
-  const [basket, setBasket] = useState(JSON.parse(localStorage.getItem("basket") || ""))
-  const [total, setTotal] = useState<number>(0)
-
-  let filteredList =  useMemo(() => {
-    return data?.cars.filter((item: CarsInterface)=> {
-      if(basket){
-        if(basket.includes(`${item.id}`)){
-          setTotal((previous) => {return previous + item.price})
-          return item
-        }
-      }else{
-        return null
-      }
-    })
-  }, [data])
+  const [data, setData] = useState<DataInterface>({} as DataInterface);
+  const {cart, removeCart} = useContext(CartContext)
+  
+  
+  const [basket, setBasket] = useState((prev: any) => {
+    let actualCart = localStorage.getItem("cart")
+    if(actualCart){
+      return JSON.parse(actualCart)
+    }else{
+      return []
+    }
+  })
+  
 
  
-
-
+  
   const getData = useCallback(() => {
     CarsService()
       .getAllCars()
@@ -43,24 +39,47 @@ const Basket = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [ basket]);
 
-  const deleteBasket = (e: number) => {
- 
-    let list = basket
-   
-   list.slice(list.indexOf(`${e}`))
-   
-   localStorage.setItem("basket", list)
-  }
 
   useEffect(() => {
     getData();
-  }, [getData]);
+   
+  }, [cart, removeCart]);
+
+ 
+
+  const filteredList =  useMemo(() => {
+  if(data.cars){
+    let newList: any[] = []
+    data?.cars.filter((item: CarsInterface)=> {
+    
+     for(let teste of cart){
+      if(teste.id === item.id)
+      newList.push(item)
+     }
+    })
+ return newList
+  }
+  }, [data, removeCart, cart])
+
+  const total =  useMemo(() => {
+    if(data.cars){
+     let soma: number = 0
+      data?.cars.filter((item: CarsInterface)=> {
+      
+       for(let teste of cart){
+        if(teste.id === item.id)
+        soma +=item.price
+       }
+      })
+   return soma
+    }
+    }, [data, removeCart, cart])
+  
+
   return (
     <>
-      {console.log("data here", data)}
-      {console.log("filtro", total)}
       <Header fixed={false} />
       <Container className="">
         <Row className="products ">
@@ -80,7 +99,7 @@ const Basket = () => {
                     price={item.price}
                     model={item.model}
                     year={item.year}
-                    deleteBasket={deleteBasket}
+                    deleteBasket={removeCart}
                   ></BasketItem>
                 )
                 })}
@@ -133,18 +152,18 @@ const Basket = () => {
           {user ? (
             <Modal.Body>
               <Row>
-                <h6>Cartões cartão</h6>
+                <h6>Cartões disponíveis:</h6>
                 <Row>
-                  <div>Cartões Disponiveis</div>
+                  <div>cartao 1</div>
                 </Row>
               </Row>
-              <Row>
-                <Link
-                  className={"btn btn-sucess mt-5"}
-                  to={"/profile/registerCard"}
+              <Row className="mt-2">
+                <Button
+                variant="warning"
+                
                 >
                   Finalizar pedido
-                </Link>
+                </Button>
               </Row>
             </Modal.Body>
           ) : (
@@ -155,7 +174,7 @@ const Basket = () => {
                   prosseguir.
                 </h6>
               </Row>
-              <Row>
+              <Row className="mt-4">
                 <Link
                   className={"btn btn-warning mt-5"}
                   to={"/profile/registerCard"}

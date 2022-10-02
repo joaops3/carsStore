@@ -14,6 +14,9 @@ import InputMask from "react-input-mask";
 import DatePicker from "react-datepicker";
 import { parseDate, formatDate } from "../../helpers/helpers";
 import {useDropzone} from 'react-dropzone'
+import CarsService from "../../services/CarsService";
+import CurrencyInput from "react-currency-input-field";
+
 
 interface Props {
   operation: string;
@@ -21,8 +24,8 @@ interface Props {
 }
 
 const FormProduct: React.FC<Props> = ({ operation, data }) => {
-  // const [data, setData] = useState<CarsInterface | object>({});
-
+  // const [data, setData] = useState<CarsInterface>({});
+  const [amount, setAmount] = useState<string | undefined>("0");
   const {
     handleSubmit,
     getValues,
@@ -38,7 +41,12 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
   
 
-  const submit: SubmitHandler<CarsInterface> = (data) => {};
+  const submit: SubmitHandler<CarsInterface> = (data) => {
+    let cloneData = Object.assign({}, data)
+    CarsService().setCars(cloneData)
+      .then((response)=> {})
+      .catch((e)=> {})
+  };
 
   return (
     <Container className="mt-5">
@@ -81,7 +89,7 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
                   type="model"
                   mask=""
                   className="input"
-                  placeholder="Email"
+                  placeholder="Fabricante"
                   value={value}
                   defaultValue={getValues("model")}
                   onChange={(e) => onChange(e)}
@@ -108,7 +116,7 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
                   className={"input"}
                   type="text"
                   mask=""
-                  placeholder="Nome"
+                  placeholder="Ano de fabricação"
                   value={value}
                   defaultValue={getValues("year")}
                   onChange={(e) => {
@@ -116,7 +124,7 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
                   }}
                 />
               )}
-              rules={{ required: "O nome é obrigatorio", maxLength: 50 }}
+              rules={{ required: "O ano de fabricação é obrigatorio", maxLength: 50 }}
             />
             {errors?.year && (
               <Form.Text className="errorsMessage">
@@ -132,20 +140,27 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
               control={control}
               name={"price"}
               render={({ field: { onChange, value } }) => (
-                <InputMask
-                  id={"price"}
-                  className={"input"}
-                  type="text"
-                  mask=""
-                  placeholder="Nome"
-                  value={value}
-                  defaultValue={getValues("price")}
-                  onChange={(e) => {
-                    onChange(e);
-                  }}
-                />
+                <CurrencyInput
+                      id="amount"
+                      name="amount"
+                      placeholder="R$ 0.00"
+                      className="input"
+                      decimalSeparator={"."}
+                      groupSeparator={","}
+                      allowNegativeValue={false}
+                      allowDecimals={true}
+                      decimalsLimit={2}
+                      decimalScale={2}
+                      disableGroupSeparators={true}
+                      prefix={"R$"}
+                      value={value}
+                      onValueChange={(value) => {
+                        onChange(value)
+                       
+                      }}
+                    />
               )}
-              rules={{ required: "O nome é obrigatorio", maxLength: 50 }}
+              rules={{ required: "O preço é obrigatorio", maxLength: 50 }}
             />
             {errors?.price && (
               <Form.Text className="errorsMessage">

@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
 import Cards from "../../../components/table/Card/Cards";
 import Loading from "../../../components/UI/loading/Loading";
+import TransactionService from "../../../services/TransactionService";
+import { AuthContext } from "../../../context/AuthProvider";
 
 const ListCars = () => {
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const {user} = useContext(AuthContext)
+
+  const getData = useCallback(()=> {
+    TransactionService().seeOwned(user.id)
+  }, [])
+
+  useEffect(()=> {
+    getData()
+  }, [getData])
+
+  
   return (
     <Container fluid className="">
       <Row className="text-center">

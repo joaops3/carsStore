@@ -6,7 +6,7 @@ import Header from "../components/header/Header";
 import Login from "../pages/login/Login";
 import SignIn from "../pages/signIn/SignIn";
 import ProductPage from "../pages/productsPage/ProductPage";
-import Basket from "../pages/basket/Basket";
+import Cart from "../pages/cart/Cart";
 import Profile from "../pages/profile/Profile";
 import Private from "./Private";
 import Toast from "../components/toast/Toast";
@@ -18,13 +18,13 @@ function Router() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/product/:id" element={<ProductPage />}></Route>
-        <Route path="/basket" element={<Basket />}></Route>
+        <Route path="/cart" element={<Cart />}></Route>
         <Route path="/signin" element={<SignIn />}></Route>
         <Route
           path="/profile/*"
           element={
             <Private>
-              <Profile />
+              <Profile/>
             </Private>
           }
         ></Route>

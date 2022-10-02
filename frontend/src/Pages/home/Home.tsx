@@ -20,7 +20,7 @@ const Home = () => {
   const [data, setData] = useState<carsQuery | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalItems, setTotalItems] = useState<number>(0);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(3);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(6);
   const [loading, setLoading] = useState<boolean>(true);
 
   const handlePageChange = (currentPage: number) => {
@@ -60,6 +60,11 @@ const Home = () => {
             finibus ut enim elementum faucibus. Nam gravida non nulla non
             vehicula. Etiam elementum ali
           </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            finibus ut enim elementum faucibus. Nam gravida non nulla non
+            vehicula. Etiam elementum ali
+          </p>
         </Section>
 
         <Row>
@@ -82,6 +87,11 @@ const Home = () => {
         <Section text={"left"} img={img2}>
           <h2 className="">Future right here</h2>
 
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            finibus ut enim elementum faucibus. Nam gravida non nulla non
+            vehicula. Etiam elementum ali
+          </p>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             finibus ut enim elementum faucibus. Nam gravida non nulla non

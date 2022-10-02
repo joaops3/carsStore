@@ -16,12 +16,12 @@ const parameters = {
 }
 
 api.interceptors.request.use((config) => {
-    const token = getToken()
-    if (!token) {
+    const user = getToken()
+    if (!user) {
         return config
     }
     if (config.headers) {
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = `Bearer ${user.token}`
         return config
     }
 }, (error) => {

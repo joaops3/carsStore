@@ -4,13 +4,10 @@ import { UsersInterface } from '../interfaces/interfaces'
 const TransactionService = () => {
  
     const seeOwned =  async(id: string) => {
-        try{ 
+       
          const request = await api.post(`/user/${id}/seeowned`)
-         return request.data
-        }catch(e){
-         console.log(e)
-         return null
-        }
+         return request
+     
      }
 
      const buyCar =  async(idUser: string, idCar:string) => {

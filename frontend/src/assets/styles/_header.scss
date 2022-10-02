@@ -16,6 +16,10 @@
     .links{  
             @extend %links;
     }
+
+    .nav-link.active{
+        color: rgb(153, 31, 31);
+    }
   
 }
 
@@ -31,7 +35,22 @@
         }
     }
 
+    .nav-link.active{
+        color: rgb(153, 31, 31);
+    }
+
     .links{  
             @extend %links;
     }
+}
+
+.contador{
+    width: 1rem;
+    height: 1rem;
+    font-size: 13px;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    
 }

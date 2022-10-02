@@ -2,14 +2,14 @@ import React, { useContext, useEffect } from "react";
 import { Container, Form, Stack, Button, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Context } from "../../context/AuthProvider";
+import { AuthContext } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const { login, isLogged } = useContext(Context);
+  const { login, isLogged } = useContext(AuthContext);
   const navigate = useNavigate()
 
   const handleLogin = async () => {
@@ -47,7 +47,7 @@ const LoginForm: React.FC = () => {
               </Form.Group>
               <Form.Group className="text-center fs-2 pt-2" controlId="">
                 <Form.Label className="login-title">Senha</Form.Label>
-                <Form.Control type="text" bsPrefix="custom-class" className="input" placeholder="Senha"onChange={e => {setPassword(e.target.value)}} ></Form.Control>
+                <Form.Control type="password" bsPrefix="custom-class" className="input" placeholder="Senha"onChange={e => {setPassword(e.target.value)}} ></Form.Control>
               </Form.Group>
               <Form.Text>
                 <a href="#">Recuperar senha</a>

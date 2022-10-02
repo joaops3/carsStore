@@ -7,7 +7,14 @@ interface Props{
     children: React.ReactNode
 }
 
-export const Context = createContext<any>(undefined!)
+interface AuthContextInterface{
+  isLogged: boolean
+  user: any
+  login: (email:string, password: string) => Promise<void> 
+  logout: () => void
+}
+
+export const AuthContext = createContext<AuthContextInterface>({} as AuthContextInterface)
 
 const AuthProvider: React.FC<Props> = ({children}) => {
   const [isLogged, setIsLogged] = useState<boolean>(false)
@@ -31,15 +38,15 @@ const AuthProvider: React.FC<Props> = ({children}) => {
     const user = getToken()
    
     if(user){
-      
+      setUser(user)
       setIsLogged(true)
     }
-  }, [user])
+  }, [])
 
   return (
-   <Context.Provider value={{isLogged, login, logout}}>
+   <AuthContext.Provider value={{isLogged, login, logout, user}}>
     {children}
-   </Context.Provider>
+   </AuthContext.Provider>
   )
 }
 

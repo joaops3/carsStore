@@ -2,9 +2,9 @@
   background-image: url("../../images/main.jpg");
   background-position: center;
   background-size: cover;
+  position: relative;
   width: 100%;
-  @include flex;
-  justify-content: center;
+ 
   filter: grayscale(0.2);
 
   @media (max-width: 500px) {
@@ -21,6 +21,10 @@
     color: $primary-banner;
     padding-bottom: 200px;
     font-size: 3rem;
+
+    @media (max-width: 500px) {
+      font-size: 2rem;
+    }
   }
   p {
     width: 70%;

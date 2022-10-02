@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Form,
@@ -20,11 +20,12 @@ import { toast } from "react-toastify";
 
 interface Props {
   operation: string;
-  data?: UsersInterface;
+  currentData?: UsersInterface;
+  id?: string
 }
 
-const FormUser: React.FC<Props> = ({ operation, data }) => {
-  // const [data, setData] = useState<UsersInterface | object>({});
+const FormUser: React.FC<Props> = ({ operation, currentData, id }) => {
+  const [data, setData] = useState<UsersInterface>(currentData ?? {} as UsersInterface);
   const [nascimento, setNascimento] = useState<Date | null>();
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [confirmationError, setConfirmationError] = useState<boolean>(false);
@@ -39,9 +40,12 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
   } = useForm<UsersInterface>({ defaultValues: data });
 
   const updateInfo = () => {
-    if(data){
-      setValue("name", data.name);
-
+    if(currentData){
+    
+    setValue("name", currentData.name)
+    setValue("email", currentData.email)
+    setValue("nascimento" , formatDate(new Date(currentData.nascimento), "dd/mm/yyyy"))
+   
     }
   };
 
@@ -62,7 +66,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
 
   const submit: SubmitHandler<UsersInterface> = async (data) => {
     let dataClone = Object.assign({}, data);
-
+    console.log(dataClone)
     let birthDate = formatDate(new Date(dataClone.nascimento), "yyyy-mm-dd");
     dataClone.nascimento = birthDate;
     
@@ -85,13 +89,25 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
       })
         .catch(e => {console.log(e)})
     }else{
-       // await UserService().updateUser(dataClone)
-      //   .then((res) => {navigate("/login")})
-      //   .catch(e => {console.log(e)})
+      if(!id){
+        return
+      }
+       await UserService().updateUser(id, dataClone)
+        .then((res) => {navigate("/login")})
+        .catch(e => {console.log(e)})
     }
   };
 
+ 
+  useEffect(()=> {
+    if(operation ==="edit"){
+      updateInfo()
+
+    }
+  }, [updateInfo])
+
   return (
+   <>
     <Container className="mt-5">
       <Toast></Toast>
       <Form className="bg-login p-4" onSubmit={handleSubmit(submit)}>
@@ -109,6 +125,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
                   mask=""
                   placeholder="Nome"
                   value={value}
+               
                   defaultValue={getValues("name")}
                   onChange={(e) => {
                     onChange(e);
@@ -165,7 +182,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
                     setNascimento(e);
                   }}
                   customInput={
-                    <InputMask mask="99/99/9999" placeholder="dd/mm/yyyy" />
+                    <InputMask mask="99/99/9999" defaultValue={getValues("nascimento")} placeholder="dd/mm/yyyy" />
                   }
                   showDisabledMonthNavigation
                   autoComplete="off"
@@ -218,7 +235,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
           </Form.Group>
         </Row>
         <Row className="mt-2">
-          <Form.Group as={Col} md={5} clasName="">
+          <Form.Group as={Col} md={5} className="">
             <Form.Label>Comfirmação de senha</Form.Label>
             <Form.Control
               type="password"
@@ -230,7 +247,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
               }}
             ></Form.Control>
             {confirmationError && (
-              <Form.Text>As senhas não são iguais</Form.Text>
+              <Form.Text className="errorsMessage">As senhas não são iguais</Form.Text>
             )}
           </Form.Group>
         </Row></>)}
@@ -239,6 +256,7 @@ const FormUser: React.FC<Props> = ({ operation, data }) => {
         </div>
       </Form>
     </Container>
+    </>
   );
 };
 

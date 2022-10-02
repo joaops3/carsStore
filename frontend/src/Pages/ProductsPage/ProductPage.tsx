@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
 import CarouselMinimal from "../../components/carousel/CarouselMinimal";
 import { Container, Col, Row, Button, Form, Image } from "react-bootstrap";
 import Header from "../../components/header/Header";
@@ -7,9 +7,9 @@ import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import InputMask from "react-input-mask";
 import UserService from "../../services/UserService";
 import { onlyNumbers } from "../../helpers/helpers";
-import { toast } from "react-toastify";
 import { CarsInterface } from "../../interfaces/interfaces";
 import CarsService from "../../services/CarsService";
+import {CartContext} from "../../context/CartProvider"
 
 interface dataInterface {
   cars: CarsInterface;
@@ -22,6 +22,7 @@ const ProductPage = () => {
   const [cep, setCep] = useState<string>("");
   const [adress, setAdress] = useState({ ...initialState });
   const [data, setData] = useState<dataInterface | undefined>();
+  const {addCart} = useContext(CartContext)
 
   const getData = useCallback(async () => {
     if (param.id) {
@@ -61,23 +62,6 @@ const ProductPage = () => {
       });
   };
 
-  const submit = () => {
-    let basket: any[] = []
-    let currentBasket: any = localStorage.getItem("basket")
-    let currentBasketjson = JSON.parse(currentBasket)
-    if(currentBasketjson === null || currentBasketjson === undefined ){
-      console.log("ativou if")
-      localStorage.setItem("basket", JSON.stringify([ param.id]))
-      
-    }else{
-      let basket: any[] = []
-      currentBasketjson.forEach((element: string) => { basket.push(element)})
-      basket.push( param.id)
-      localStorage.setItem("basket", JSON.stringify(basket))
-    }
- 
-    toast.success("Item adicionado ao carrinho com sucesso")
-  }
 
 
 
@@ -151,7 +135,11 @@ const ProductPage = () => {
 
             <Row className="mt-2">
               <Button
-                onClick={() => {submit()
+                onClick={() => {
+                  if(param.id){
+
+                    addCart(Number(param.id))
+                  }
                
                 }}
               >

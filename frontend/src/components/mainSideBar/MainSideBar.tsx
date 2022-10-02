@@ -10,7 +10,6 @@ interface Props {
 const MainSideBar: React.FC<Props> = ({data}) => {
   return (
     <>
-    {console.log(data)}
     <Col md={2} className="mt-5 p-3 mainSideBar">
     <Row className="text-center mb-3">
         <h5>Selecione por:</h5>

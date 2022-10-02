@@ -3,6 +3,7 @@ import React from 'react'
 import { api} from "../api/api"
 import { UsersInterface, CardsInterface } from '../interfaces/interfaces'
 
+
 const UserService = () => {
  
     const setUser =  async(data: UsersInterface) => {
@@ -15,13 +16,11 @@ const UserService = () => {
        }
     }
     const getUser =  async(id:string) => {
-        try{ 
+        
          const request = await api.get(`/user/${id}`)
-         return request.data
-        }catch(e){
-         console.log(e)
-         return null
-        }
+         return request
+        
+    
      }
      const updateUser =  async(id: string, data: UsersInterface) => {
         try{ 
