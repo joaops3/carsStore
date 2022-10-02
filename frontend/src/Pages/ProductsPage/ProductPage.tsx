@@ -9,7 +9,7 @@ import UserService from "../../services/UserService";
 import { onlyNumbers } from "../../helpers/helpers";
 import { CarsInterface } from "../../interfaces/interfaces";
 import CarsService from "../../services/CarsService";
-import {CartContext} from "../../context/CartProvider"
+import { CartContext } from "../../context/CartProvider";
 
 interface dataInterface {
   cars: CarsInterface;
@@ -22,7 +22,7 @@ const ProductPage = () => {
   const [cep, setCep] = useState<string>("");
   const [adress, setAdress] = useState({ ...initialState });
   const [data, setData] = useState<dataInterface | undefined>();
-  const {addCart} = useContext(CartContext)
+  const { addCart } = useContext(CartContext);
 
   const getData = useCallback(async () => {
     if (param.id) {
@@ -62,12 +62,8 @@ const ProductPage = () => {
       });
   };
 
-
-
-
   return (
     <>
-  
       <Header fixed={false} />
       <Container>
         <Row className="products mt-5">
@@ -136,11 +132,9 @@ const ProductPage = () => {
             <Row className="mt-2">
               <Button
                 onClick={() => {
-                  if(param.id){
-
-                    addCart(Number(param.id))
+                  if (param.id) {
+                    addCart(Number(param.id));
                   }
-               
                 }}
               >
                 <MdOutlineLocalGroceryStore /> Adicionar ao Carrinho
@@ -156,10 +150,13 @@ const ProductPage = () => {
             <Row>
               <Col>
                 <div>
-                  <span>Nome: </span> <span>Fabricante: </span>
+                  <span>Nome: </span>
+                  {data?.cars.name_car}{" "}
+                  <span>Fabricante: {data?.cars.model} </span>
                 </div>
                 <div>
-                  <span>Ano: </span> <span>Fabricante: </span>
+                  <span>Ano: </span>
+                  {data?.cars.year}
                 </div>
                 <div>
                   <span>

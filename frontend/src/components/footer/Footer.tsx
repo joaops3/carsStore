@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { BsLinkedin, BsGithub } from "react-icons/bs";
 import { AiFillInstagram } from "react-icons/ai";
 import Logo from "../../assets/logo/logo.svg"
+import {Link} from "react-router-dom"
 const Footer = () => {
   return (
     <footer>
@@ -34,9 +35,9 @@ const Footer = () => {
         <Row className="p-4 line">
           <Col md={8} className="p-2"><img src={Logo} alt=""/></Col>
           <Col md={4} className=" p-2">
-            <span className="mx-1"><BsLinkedin size={25}></BsLinkedin></span>
-            <span className="mx-1"> <AiFillInstagram size={25}></AiFillInstagram></span>
-            <span className="mx-1"> <BsGithub size={25}></BsGithub></span>
+           <a href="https://www.linkedin.com/in/joaopedrosilva3/" className="mx-1 socials"><BsLinkedin size={25}></BsLinkedin></a>
+            <a href="https://github.com/joaops3" className="mx-1 socials"> <AiFillInstagram size={25}></AiFillInstagram></a>
+            <a href="https://github.com/joaops3" className="mx-1 socials"> <BsGithub size={25}></BsGithub></a>
           </Col>
         </Row>
       </Container>

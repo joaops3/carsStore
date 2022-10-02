@@ -1,13 +1,14 @@
 footer{
     background-color: $fotter-bg;
 
-    h4, span{
+    h4, .socials{
         color: $footer-titles;
     }
 
-    span:hover {
+    .socials:hover {
         cursor: pointer;
         color: #ccc;
+        text-decoration: none;
     }
     a{
         text-decoration: none;

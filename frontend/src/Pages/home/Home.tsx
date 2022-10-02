@@ -77,7 +77,7 @@ const Home = () => {
               <Table
                 data={data}
                 itemsPerPage={itemsPerPage}
-                totalItems={totalItems}
+                totalItems={totalItems/2}
                 handlePageChange={(e) => handlePageChange(e)}
               ></Table>
             )}
