@@ -31,7 +31,7 @@ const SideBar: React.FC = () => {
         <SideBarIcon href={`/profile/${param.id}/registercard`} icon={<BiCreditCard size={30} />}>
           Cadastrar Cartao
         </SideBarIcon>
-        {user.type && ( <SideBarIcon href={`/profile/${param.id}/registercars`} icon={<AiOutlineFileAdd size={30} />}>
+        {true && ( <SideBarIcon href={`/profile/${param.id}/registercars`} icon={<AiOutlineFileAdd size={30} />}>
           Cadastrar Veiculo
         </SideBarIcon>)}
       </Col>
