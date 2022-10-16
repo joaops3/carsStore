@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e ts,json src/index.ts"
+    "dev": "nodemon -e ts,json src/index.ts",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1233.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
@@ -39,7 +41,6 @@
     "@types/passport-jwt": "^3.0.6",
     "@types/sequelize": "^4.28.14",
     "@types/sharp": "^0.30.4",
-    "@types/validator": "^13.7.4",
-    "aws-sdk": "^2.1194.0"
+    "@types/validator": "^13.7.4"
   }
 }

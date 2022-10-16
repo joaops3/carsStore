@@ -42,7 +42,8 @@ const Header: React.FC<Props> = ({fixed}) => {
     if(fixed){
       setHeaderClass("header-fixed")
     }
-    return ()=> window.addEventListener("scroll", showHeader)
+    window.addEventListener("scroll", showHeader);
+    return ()=> {window.removeEventListener("scroll",showHeader)}
   },[userid])
   
 

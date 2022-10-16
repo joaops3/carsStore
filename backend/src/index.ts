@@ -13,7 +13,7 @@ const server = express()
 server.use(express.static(path.join(__dirname, "../public")))
 
 server.use(express.urlencoded({ extended: true }))
-server.use(cors())
+server.use(cors({origin: "http://cars-store.s3-website-us-east-1.amazonaws.com"}))
 server.use(express.json())
 
 
@@ -43,5 +43,5 @@ server.use(errorHandler)
 
 database
     .sync()
-    .then(() => { server.listen(process.env.PORT) })
+    .then(() => { server.listen(process.env.PORT || 3000) })
     .catch((err) => { console.log(err)})
