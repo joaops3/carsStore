@@ -115,7 +115,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const token = await generateToken({ id: user.id, email: user.email })
-    res.status(201).json({ id: user.id, token })
+    res.status(201).json({ id: user.id, token, type: user.admin })
 }
 
 

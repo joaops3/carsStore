@@ -38,7 +38,6 @@ export const getCars = async (req: Request, res: Response) => {
 
 
 export const register = async (req: Request, res: Response) => {
-    console.log("aq", req.body)
     if (!req.body.name_car) {
         return res.status(422).json({ error: "nome é obrigatorios" })
     }
@@ -76,6 +75,7 @@ export const register = async (req: Request, res: Response) => {
             filesDb.push(carimg)
 
         })
+        newCar.save()
     } catch (e) { console.log(e) }
     res.status(200).json({ sucesso: "carro cadastrado com sucesso" })
 }

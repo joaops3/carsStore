@@ -29,7 +29,7 @@ export const buyCar = async (req: Request, res: Response) => {
         return res.json({ error: "usuario nao encontrado" })
     }
     if (!car) {
-        return res.json({ error: "usuario nao encontrado" })
+        return res.json({ error: "carro nao encontrado" })
     }
 
     await user.addCars([car])
