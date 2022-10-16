@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
 import CarouselMinimal from "../../components/carousel/CarouselMinimal";
-import { Container, Col, Row, Button, Form, Image } from "react-bootstrap";
+import { Container, Col, Row, Button, Form, Image, Modal, ModalBody, ModalHeader } from "react-bootstrap";
 import Header from "../../components/header/Header";
 import { useParams } from "react-router-dom";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
@@ -71,8 +71,6 @@ const ProductPage = () => {
             {data?.cars.Carimgs && (
               <CarouselMinimal data={data?.cars.Carimgs}></CarouselMinimal>
             )}
-
-            {/* {  data?.cars.Carimgs &&  ( <Image src={data?.cars.Carimgs[0].url}></Image>)} */}
           </Col>
           <Col md={4} className="mt-5">
             <Row className="text-center">
@@ -142,36 +140,47 @@ const ProductPage = () => {
             </Row>
           </Col>
         </Row>
-        <Row className="ml-1 mt-10 bg-login p-3">
-          <Row className="py-6">
-            <Row>
+        <Row className="ml-1 mt-10 bg-login p-3 mb-10">
+       
+           
               <h3>Informações</h3>
-            </Row>
+           
             <Row>
               <Col>
-                <div>
-                  <span>Nome: </span>
-                  {data?.cars.name_car}{" "}
-                  <span>Fabricante: {data?.cars.model} </span>
+                <div style={{textTransform: "capitalize"}}>
+                  <strong>Nome: </strong>
+                  {data?.cars.name_car}
+                  <strong> Fabricante: </strong>{data?.cars.model} 
                 </div>
-                <div>
-                  <span>Ano: </span>
+                <div style={{textTransform: "capitalize"}}>
+                  <strong>Ano: </strong>
                   {data?.cars.year}
                 </div>
                 <div>
-                  <span>
-                    Descrição: Lorem ipsum dolor sit amet consectetur
+                  <strong> Descrição: </strong> Lorem ipsum dolor sit amet consectetur
                     adipisicing elit. Perferendis sapiente assumenda reiciendis
                     quae quibusdam at veritatis voluptatem placeat magnam nisi?
                     Odit vel vero quam praesentium facere voluptates, quidem
-                    nisi est.{" "}
-                  </span>{" "}
+                    nisi est.
+                
                 </div>
               </Col>
             </Row>
-          </Row>
+      
         </Row>
       </Container>
+      <Modal show={true} className="mobile-modal">
+          <Modal.Header >
+            <Modal.Title>  Atenção!</Modal.Title>
+          </Modal.Header>
+        
+            <Modal.Body>
+           <p>Acesse nosso app para melhor experiência</p>
+
+            </Modal.Body>
+      
+         
+        </Modal>
     </>
   );
 };

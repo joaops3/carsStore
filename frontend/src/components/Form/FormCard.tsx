@@ -37,11 +37,14 @@ const FormCard: React.FC<Props> = ({ operation, data }) => {
   } = useForm<CardsInterface>({ defaultValues: data });
 
   const submit: SubmitHandler<CardsInterface> = async (data) => {
+    if(process.env.REACT_APP_ADMIN != "ADMIN") {
+      return
+    }
     let dataClone = Object.assign({}, data);
     
     if(id){
 
-      await UserService().registerCard(id, dataClone).then((response) => {toast.success("Cartao cadastrado com sucesso")}).catch(e => {console.log(e); toast.error("error no cadastro")})
+      await UserService().registerCard(id, dataClone).then((response) => {toast.success("Cartão cadastrado com sucesso")}).catch(e => {console.log(e); toast.error("error no cadastro")})
     }
   };
 
@@ -140,7 +143,7 @@ const FormCard: React.FC<Props> = ({ operation, data }) => {
             </Row>
             <Row className="mt-2">
               <Form.Group as={Col} md={12}>
-                <Form.Label>Codigo</Form.Label>
+                <Form.Label>Código</Form.Label>
                 <Controller
                   control={control}
                   name={"card_code"}
@@ -201,7 +204,7 @@ const FormCard: React.FC<Props> = ({ operation, data }) => {
             <div className="card-container">
               <div className="text-container">
                 <div className="card-text">{number}</div>
-                <div className="card-text">Napoleao Bonapart</div>
+                <div className="card-text">Imperador Napoleão</div>
               </div>
             </div>
           </Col>

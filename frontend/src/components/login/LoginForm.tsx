@@ -9,7 +9,7 @@ const LoginForm: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const { login, isLogged } = useContext(AuthContext);
+  const { login, isLogged,user } = useContext(AuthContext);
   const navigate = useNavigate()
 
   const handleLogin = async () => {
@@ -19,8 +19,9 @@ const LoginForm: React.FC = () => {
     }
    
     await login(email, password)
-      .then((e: any) => {
-        toast.success("Login feito com sucesso");  navigate("/profile")
+      .then((id: number) => {
+        
+        toast.success("Login feito com sucesso");  navigate(`/profile/${id}`)
       })
       .catch((e: any) => {
         setError(true)
@@ -31,7 +32,7 @@ const LoginForm: React.FC = () => {
   useEffect(()=> { 
     if(isLogged){
      
-      navigate("/profile")
+      navigate(`/profile/${user.id}`)
     }
 },[isLogged])
   return (
@@ -40,18 +41,22 @@ const LoginForm: React.FC = () => {
         <Container className="">
           <Form className="d-flex justify-content-center">
             <Col md={5} className="bg-login p-3">
-          <Row className="text-center">   {error && <p className="errorsMessage">Email ou Senha Invalidos</p>}</Row>
+          <Row className="text-center">   {error && <p className="errorsMessage">Email ou Senha Inválidos</p>}</Row>
               <Form.Group className="text-center fs-2" controlId="">
                 <Form.Label className="login-title">Email</Form.Label>
-                <Form.Control type="text" bsPrefix="custom-class" className="input" placeholder="Email" onChange={e => {setEmail(e.target.value)}}></Form.Control>
+                <Form.Control type="text" bsPrefix="custom-class" className="input" placeholder="Email" onChange={e => {setEmail(e.target.value)}}  onKeyDown={(e)=> {if(e.key ==="Enter")return handleLogin()}}></Form.Control>
               </Form.Group>
               <Form.Group className="text-center fs-2 pt-2" controlId="">
                 <Form.Label className="login-title">Senha</Form.Label>
-                <Form.Control type="password" bsPrefix="custom-class" className="input" placeholder="Senha"onChange={e => {setPassword(e.target.value)}} ></Form.Control>
+                <Form.Control type="password" bsPrefix="custom-class" className="input" placeholder="Senha"onChange={e => {setPassword(e.target.value)}}  onKeyDown={(e)=> {if(e.key ==="Enter") handleLogin()}} ></Form.Control>
               </Form.Group>
               <Form.Text>
-                <a href="#">Recuperar senha</a>
+                <a href="#" style={{color: "red"}}>Recuperar senha</a>
+              
               </Form.Text>
+              <div style={{color: "blue"}}>   tester@email.com
+               </div >
+               <div style={{color: "blue"}}> 123</div>
               <Form.Group
                 as={Col}
                 sm={12}

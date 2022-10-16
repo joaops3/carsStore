@@ -54,3 +54,28 @@
     right: 0;
     
 }
+
+.navbar-toggler-icon{
+    color: white !important;
+   
+ }
+
+ .navbar-toggler{
+    background-color: white !important;
+ }
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: red;
+
+    
+     a.dropdown-item:focus, a.dropdown-item> a:focus{
+        background-color: red !important;
+     }
+    
+     a.dropdown-item:hover> a{
+        color: inherit;
+        background-color: inherit;
+     }
+    
+     
+}

@@ -5,7 +5,7 @@ import FormCard from '../../../components/form/FormCard'
 const RegisterCard = () => {
   return (
     <Container fluid>
-    <Row className="text-center"><h1>CADASTRAR CARTÃO DE CREDITO</h1></Row>
+ <h1 className='text-center'>CADASTRAR CARTÃO DE CREDITO</h1>
     <FormCard operation="edit"></FormCard>
     </Container>
   )

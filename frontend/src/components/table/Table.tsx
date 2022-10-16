@@ -14,7 +14,7 @@ const Table: React.FC<Props> = ({data, itemsPerPage, handlePageChange, totalItem
   useEffect(()=> {}, [data])
   
   return (
-    <>   {console.log("my data rows",data?.cars.rows)}
+    <>   
     <Container className='bg-login mt-5'>
    
         <Row className="p-3 d-flex justify-content-between">

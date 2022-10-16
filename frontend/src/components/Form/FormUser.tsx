@@ -65,12 +65,15 @@ const FormUser: React.FC<Props> = ({ operation, currentData, id }) => {
   );
 
   const submit: SubmitHandler<UsersInterface> = async (data) => {
+    if(process.env.REACT_APP_ADMIN != "ADMIN") {
+      return
+    }
+
     let dataClone = Object.assign({}, data);
-    console.log(dataClone)
+
     let birthDate = formatDate(new Date(dataClone.nascimento), "yyyy-mm-dd");
     dataClone.nascimento = birthDate;
     
-
     if(operation ==="sign"){
       if (data.password !== passwordConfirmation) {
         setConfirmationError(true);

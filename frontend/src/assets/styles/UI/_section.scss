@@ -1,4 +1,5 @@
 .section-container {
+ 
   img {
     border-radius: 5px;
   }
@@ -13,6 +14,27 @@
     font-family: $font-text;
     color: rgb(34, 34, 34);
   }
+}
+
+.hidden{
+  opacity: 0;
+  transform: translateX(-50%);
+
+  &-left{
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+  &-right{
+    opacity: 0;
+    transform: translateX(500px);
+  }
+}
+
+.animation{
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.7s ease-in-out;
+
 }
 
 

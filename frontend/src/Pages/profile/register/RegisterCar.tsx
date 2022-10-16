@@ -5,7 +5,7 @@ import FormProduct from '../../../components/form/FormProduct'
 const RegisterCar = () => {
   return (
     <Container fluid>
-    <Row className="text-center"><h1>CADASTRAR PRODUTO</h1></Row>
+ <h1 className="text-center">CADASTRAR PRODUTO</h1>
     <FormProduct operation="edit"></FormProduct>
     </Container>
   )

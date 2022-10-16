@@ -1,0 +1,17 @@
+.modal-backdrop.show{
+    opacity: 0;
+    display: none;
+    padding-right: 0 !important;
+    @media(max-width: 767px){
+        display: block;
+        opacity: 0.3;
+    }
+}
+
+.mobile-modal{
+    display: none !important;
+    padding-right: 0 !important;
+    @media(max-width: 767px){
+        display: block !important;
+    }
+}

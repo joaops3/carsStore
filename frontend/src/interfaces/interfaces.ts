@@ -21,7 +21,7 @@ export interface carsQuery {
 }
 
 export interface Carimgs {
-    key: string,
+    key?: string,
     url: string
 }
 export interface CardsInterface{

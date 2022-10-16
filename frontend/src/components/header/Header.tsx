@@ -7,6 +7,8 @@ import Logo from "../../assets/logo/logo.svg";
 import { Link } from "react-router-dom";
 import {AuthContext} from "../../context/AuthProvider"
 import {CartContext} from "../../context/CartProvider"
+import {getToken} from "../../api/auth"
+
 
 interface Props {
   fixed?: boolean
@@ -17,6 +19,7 @@ const Header: React.FC<Props> = ({fixed}) => {
   const [colorHeader, setColorHeader] = useState<boolean>(false);
   const [headerClass, setHeaderClass] = useState<string>("header")
   const {quantity} = useContext(CartContext)
+  const [userid, setUserId] = useState(getToken)
 
   const showHeader = () => {
 
@@ -40,13 +43,14 @@ const Header: React.FC<Props> = ({fixed}) => {
       setHeaderClass("header-fixed")
     }
     return ()=> window.addEventListener("scroll", showHeader)
-  },[])
+  },[userid])
   
 
   return (
     <>
       <header>
         {/* @ts-ignore */}
+       
         <Navbar className={`${headerClass}${colorHeader ? "-active" : ""}`} fixed={`${fixed ? "top" : ""}`} expand="lg">
           <Container>
             <Navbar.Brand href="/">
@@ -78,7 +82,7 @@ const Header: React.FC<Props> = ({fixed}) => {
               <Nav>
                 {isLogged ? (
                   <>
-                    <Nav.Link href="/cart" className="links position-relative">
+                    <Nav.Link href={`/cart/${userid.id}`} className="links position-relative">
                       <BsFillBasketFill size={30} className={""} />
                     {  quantity > 0 && (<div className="rounded-circle bg-danger d-flex justify-content-center align-items-center contador">{quantity}</div>)}
                     </Nav.Link>
@@ -87,8 +91,11 @@ const Header: React.FC<Props> = ({fixed}) => {
                       title={<BiUserCircle size={30} className="links" />}
                       id="navbarScrollingDropdown"
                     >
-                        <NavDropdown.Item href={`/profile/${user.id}`}>
+                     
+                        <NavDropdown.Item >
+                        <Link to={`/profile/${userid.id}/`} >
                           Perfil
+                        </Link>
                         </NavDropdown.Item>
                       <NavDropdown.Item href="#">
                        <div onClick={() => {logout()}}> Logout</div>

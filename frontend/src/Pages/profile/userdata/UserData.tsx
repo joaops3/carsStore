@@ -15,14 +15,15 @@ const UserData = () => {
   const [data, setData] = useState<Idata>({} as Idata)
   const [isLoading, setLoading] = useState<boolean>(true)
   const {user} = useContext(AuthContext)
+  const param = useParams()
 
   const getData = useCallback(() => {
-    if(user.id){
-      UserService().getUser(user.id)
+    if(param.id){
+      UserService().getUser(param.id)
         .then((response)=> {setData(response.data); setLoading(false)})
         .catch((e)=> {console.log(e)})
     }
-  }, [user])
+  }, [param])
 
   useEffect(()=>{
     getData()
@@ -31,11 +32,12 @@ const UserData = () => {
     <>
     { isLoading ? <Loading></Loading> : 
     <>
-      <Container  className="bg-login py-2 px-4">
+      <Container  className=" py-2 px-4" fluid>
       <h1 className="text-center">Dados do usuario</h1>
-      <Row className="my-4 d-flex justify-content-end">
+     <Container className="bg-login p-4 mt-5">
+     <Row className="my-4 d-flex justify-content-end ">
         <Col sm={3}>
-          <Link to="/profile/edit" className="header-cadastrar">
+          <Link to={`/profile/${param.id}/edit`} className="header-cadastrar">
             Editar Dados
           </Link>
         </Col>
@@ -67,6 +69,7 @@ const UserData = () => {
             </div>
           </Col>
         </Row>
+     </Container>
       </Container>
     </>
 

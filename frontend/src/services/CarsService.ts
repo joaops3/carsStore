@@ -40,10 +40,9 @@ const CarsService = () => {
   const setCars = async (data: CarsInterface) => {
     try {
       const request = await api.post(`/registercar`, data)
-      return request.data
+      return request
     } catch (e) {
       console.log(e)
-      return null
     }
   }
   const updateCars = async (id: string, data: CarsInterface) => {

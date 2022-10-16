@@ -4,22 +4,29 @@ import Cards from "../../../components/table/Card/Cards";
 import Loading from "../../../components/UI/loading/Loading";
 import TransactionService from "../../../services/TransactionService";
 import { AuthContext } from "../../../context/AuthProvider";
+import { useParams } from "react-router-dom";
 
 const ListCars = () => {
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const {user} = useContext(AuthContext)
+  const param = useParams()
+  //const {user} = useContext(AuthContext)
 
   const getData = useCallback(()=> {
-    TransactionService().seeOwned(user.id)
+    if(param.id){
+
+      TransactionService().seeOwned(param.id)
+    }
   }, [])
 
   useEffect(()=> {
     getData()
+  
   }, [getData])
 
   
   return (
+  
     <Container fluid className="">
       <Row className="text-center">
         <h1>Meus Veículos</h1>

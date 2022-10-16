@@ -10,7 +10,7 @@ interface Props{
 interface AuthContextInterface{
   isLogged: boolean
   user: any
-  login: (email:string, password: string) => Promise<void> 
+  login: (email:string, password: string) => Promise<number> 
   logout: () => void
 }
 
@@ -20,13 +20,14 @@ const AuthProvider: React.FC<Props> = ({children}) => {
   const [isLogged, setIsLogged] = useState<boolean>(false)
   const [user, setUser] = useState(null)
 
-  const login = async(email:string, password:string) => { 
+  const login = async(email:string, password:string): Promise<number> => { 
     const data = await loginRequest(email, password)
     
     if(data){
       setToken(data)
       setIsLogged(true)
     }
+    return data.id
   }
 
   const logout = () => {

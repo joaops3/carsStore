@@ -26,9 +26,9 @@ const Footer = () => {
           </Row></Col>
           <Col md={4}> <h4>Sobre Nós</h4>
           <Row>
-            <Col md={12}><a href="#">sobre nos</a></Col>
-            <Col md={12}><a href="#">sobre nos</a></Col>
-            <Col md={12}><a href="#">sobre nos</a></Col>
+            <Col md={12}><a href="#">about</a></Col>
+            <Col md={12}><a href="#">about</a></Col>
+            <Col md={12}><a href="#">about</a></Col>
           </Row>
           </Col>
         </Row>

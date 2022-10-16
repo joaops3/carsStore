@@ -1,35 +1,37 @@
-import React, { useCallback, useEffect, useMemo, useState, useContext } from "react";
-import { Container, Row, Col, Button, Modal } from "react-bootstrap";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useContext,
+} from "react";
+import { Container, Row, Col, Button, Modal, Table } from "react-bootstrap";
 import Header from "../../components/header/Header";
 import { Link } from "react-router-dom";
 import BasketItem from "./CartItem";
 import { addMoneyRealMask } from "../../helpers/helpers";
 import CarsService from "../../services/CarsService";
 import { CarsInterface } from "../../interfaces/interfaces";
-import {CartContext} from "../../context/CartProvider"
+import { CartContext } from "../../context/CartProvider";
 interface DataInterface {
-  cars: CarsInterface[]
+  cars: CarsInterface[];
 }
 
 const Basket = () => {
   const [show, setShow] = useState(false);
   const [user, setUser] = useState<any>(true);
   const [data, setData] = useState<DataInterface>({} as DataInterface);
-  const {cart, removeCart} = useContext(CartContext)
-  
-  
-  const [basket, setBasket] = useState((prev: any) => {
-    let actualCart = localStorage.getItem("cart")
-    if(actualCart){
-      return JSON.parse(actualCart)
-    }else{
-      return []
-    }
-  })
-  
+  const { cart, removeCart } = useContext(CartContext);
 
- 
-  
+  const [basket, setBasket] = useState((prev: any) => {
+    let actualCart = localStorage.getItem("cart");
+    if (actualCart) {
+      return JSON.parse(actualCart);
+    } else {
+      return [];
+    }
+  });
+
   const getData = useCallback(() => {
     CarsService()
       .getAllCars()
@@ -39,44 +41,35 @@ const Basket = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, [ basket]);
-
+  }, [basket]);
 
   useEffect(() => {
     getData();
-   
   }, [cart, removeCart]);
 
- 
-
-  const filteredList =  useMemo(() => {
-  if(data.cars){
-    let newList: any[] = []
-    data?.cars.filter((item: CarsInterface)=> {
-    
-     for(let teste of cart){
-      if(teste.id === item.id)
-      newList.push(item)
-     }
-    })
- return newList
-  }
-  }, [data, removeCart, cart])
-
-  const total =  useMemo(() => {
-    if(data.cars){
-     let soma: number = 0
-      data?.cars.filter((item: CarsInterface)=> {
-      
-       for(let teste of cart){
-        if(teste.id === item.id)
-        soma +=item.price
-       }
-      })
-   return soma
+  const filteredList = useMemo(() => {
+    if (data.cars) {
+      let newList: any[] = [];
+      data?.cars.filter((item: CarsInterface) => {
+        for (let teste of cart) {
+          if (teste.id === item.id) newList.push(item);
+        }
+      });
+      return newList;
     }
-    }, [data, removeCart, cart])
-  
+  }, [data, removeCart, cart]);
+
+  const total = useMemo(() => {
+    if (data.cars) {
+      let soma: number = 0;
+      data?.cars.filter((item: CarsInterface) => {
+        for (let teste of cart) {
+          if (teste.id === item.id) soma += item.price;
+        }
+      });
+      return soma;
+    }
+  }, [data, removeCart, cart]);
 
   return (
     <>
@@ -87,41 +80,42 @@ const Basket = () => {
             <Row>
               <h2>Seus Produtos: </h2>
             </Row>
-            {filteredList &&
-             
-            filteredList?.map((item: CarsInterface, key: number) => {return (
-                
-                  <BasketItem
-                  key={key}
-                  id={item.id}
-                    name_car={item.name_car}
-                    Carimgs={item.Carimgs}
-                    price={item.price}
-                    model={item.model}
-                    year={item.year}
-                    deleteBasket={removeCart}
-                  ></BasketItem>
-                )
-                })}
+            <Table>
+              <thead></thead>
+              <tbody>
+                {filteredList &&
+                  filteredList?.map((item: CarsInterface, key: number) => {
+                    return (
+                      <BasketItem
+                        key={key}
+                        id={item.id}
+                        name_car={item.name_car}
+                        Carimgs={item.Carimgs}
+                        price={item.price}
+                        model={item.model}
+                        year={item.year}
+                        deleteBasket={removeCart}
+                      ></BasketItem>
+                    );
+                  })}
+              </tbody>
+            </Table>
           </Col>
           <Col md={4} className="mt-5">
             <Row>
               <h2>Comprar agora</h2>
             </Row>
             <Row>
-              <Col sm={12} className={"table"}>
-               
-               
-              </Col>
+              <Col sm={12} className={"table"}></Col>
             </Row>
             <Row className="my-3">
-                  <Col md={8}>
-                    <div>FRETE:</div>
-                  </Col>
-                  <Col md={4}>
-                    <div style={{ color: "green" }}>GRATIS!!</div>
-                  </Col>
-                </Row>
+              <Col md={8}>
+                <div>FRETE: </div>
+              </Col>
+              <Col md={4}>
+                <div style={{ color: "green" }}>GRATIS!!</div>
+              </Col>
+            </Row>
             <Row className="my-3">
               <Col md={8}>
                 <div>TOTAL:</div>
@@ -136,7 +130,7 @@ const Basket = () => {
                 bsPrefix="custom-class"
                 className="btn-buy"
                 onClick={() => {
-                  setShow(true)
+                  setShow(true);
                 }}
               >
                 {" "}
@@ -151,19 +145,14 @@ const Basket = () => {
           </Modal.Header>
           {user ? (
             <Modal.Body>
-              <Row>
+              <Row className="mb-5">
                 <h6>Cartões disponíveis:</h6>
-                <Row>
-                  <div>cartao 1</div>
-                </Row>
+               
+                  <div>cartão 1</div>
+                
               </Row>
               <Row className="mt-2">
-                <Button
-                variant="warning"
-                
-                >
-                  Finalizar pedido
-                </Button>
+                <Button variant="warning">Finalizar pedido</Button>
               </Row>
             </Modal.Body>
           ) : (
@@ -185,12 +174,26 @@ const Basket = () => {
             </Modal.Body>
           )}
           <Modal.Footer>
-            <Button variant="secondary" onClick={() =>{setShow(false)}}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setShow(false);
+              }}
+            >
               Cancelar
             </Button>
           </Modal.Footer>
         </Modal>
       </Container>
+      <Modal show={true} className="mobile-modal">
+        <Modal.Header>
+          <Modal.Title> Atenção!</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <p>Acesse nosso app para melhor experiência</p>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

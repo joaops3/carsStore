@@ -18,8 +18,8 @@ const CarouselMinimal: React.FC<Props> = ({data}) => {
    <>
     {data && ( 
     
-      <Row className='carousel-container'>  
-      <Col xs={12}><Image src={currentImg}  width={700} height={400}></Image></Col>
+      <Row className='carousel-container gap-3'>  
+      <Col xs={12} md={12}><Image src={currentImg}  width={700} height={400}></Image></Col>
       {data?.map((item: any, index: number) => {return <Col xs={3} className="mt-10"><Image key={index} src={item.url} width={200} height={110} onClick={()=> {setCurrentImg(item.url)}}></Image></Col>})}
       </Row>)
 
