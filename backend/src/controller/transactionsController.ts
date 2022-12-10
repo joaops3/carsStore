@@ -9,15 +9,15 @@ export const registerCard = async (req: Request, res: Response) => {
     const { id } = req.params
     const { card_number, card_code } = req.body
     if (!card_number) {
-        return res.json({ error: "numero de cartao obrigatorio" })
+        return res.status(400).json({ message: "numero de cartao obrigatorio" })
     }
     if (!card_code) {
-        return res.json({ error: "numero de cartao obrigatorio" })
+        return res.status(400).json({ message: "numero de cartao obrigatorio" })
     }
 
     const card = await Cards.create({ card_number, card_code, user_id: id })
 
-    res.status(201).json({ sucess: "cartao craido com sucesso" })
+    res.status(201).json({ message: "cartao criado com sucesso" })
 }
 
 
@@ -26,15 +26,15 @@ export const buyCar = async (req: Request, res: Response) => {
     const user = await User.findByPk(id)
     const car = await Cars.findByPk(idcar)
     if (!user) {
-        return res.json({ error: "usuario nao encontrado" })
+        return res.status(404).json({ message: "usuario nao encontrado" })
     }
     if (!car) {
-        return res.json({ error: "carro nao encontrado" })
+        return res.status(404).json({ message: "carro nao encontrado" })
     }
 
     await user.addCars([car])
 
-    res.status(201).json({ sucess: "compra feita com sucesso" })
+    res.status(201).json({ message: "compra feita com sucesso" })
 }
 
 export const seeowned = async (req: Request, res: Response) => {
@@ -44,7 +44,7 @@ export const seeowned = async (req: Request, res: Response) => {
     //const user = await User.findOne({ include: { model: Cars, attributes: [], through: { attributes: [] } }, where: { id } })
     const user = await User.findByPk(id)
     if (!user) {
-        return res.json({ error: "usuario nao encontrado" })
+        return res.status(404).json({ message: "usuario nao encontrado" })
     }
     const cars = await user.getCars()
 
@@ -58,14 +58,14 @@ export const sellCar = async (req: Request, res: Response) => {
     const user = await User.findByPk(id)
     const car = await Cars.findByPk(idcar)
     if (!user) {
-        return res.json({ error: "usuario nao encontrado" })
+        return res.status(404).json({ message: "usuario nao encontrado" })
     }
     if (!car) {
-        return res.json({ error: "carro nao encontrado" })
+        return res.status(404).json({ message: "carro nao encontrado" })
     }
     await user.removeCars([car])
 
-    res.status(200).json({ sucess: "carro vendido com sucesso" })
+    res.status(200).json({ message: "carro vendido com sucesso" })
 }
 
 export const searchItem = async (req:Request, res: Response) => {

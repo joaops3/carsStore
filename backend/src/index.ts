@@ -14,6 +14,7 @@ server.use(express.static(path.join(__dirname, "../public")))
 
 server.use(express.urlencoded({ extended: true }))
 server.use(cors({origin: "http://cars-store.s3-website-us-east-1.amazonaws.com"}))
+
 server.use(express.json())
 
 

@@ -50,9 +50,7 @@ const Header: React.FC<Props> = ({fixed}) => {
   return (
     <>
       <header>
-        {/* @ts-ignore */}
-       
-        <Navbar className={`${headerClass}${colorHeader ? "-active" : ""}`} fixed={`${fixed ? "top" : ""}`} expand="lg">
+        <Navbar className={`${headerClass}${colorHeader ? "-active" : ""}`} fixed={fixed ? "top" : undefined} expand="lg">
           <Container>
             <Navbar.Brand href="/">
               <img src={Logo} width="150px" alt="logo" />
@@ -81,18 +79,18 @@ const Header: React.FC<Props> = ({fixed}) => {
                 </Nav.Link>
               </Nav>
               <Nav>
-                {isLogged ? (
-                  <>
-                    <Nav.Link href={`/cart/${userid.id}`} className="links position-relative">
+              <Nav.Link href={`/cart/`} className="links position-relative">
                       <BsFillBasketFill size={30} className={""} />
                     {  quantity > 0 && (<div className="rounded-circle bg-danger d-flex justify-content-center align-items-center contador">{quantity}</div>)}
                     </Nav.Link>
+                {isLogged ? (
+                  <>
+                   
                     <NavDropdown
                       className={"links"}
                       title={<BiUserCircle size={30} className="links" />}
                       id="navbarScrollingDropdown"
                     >
-                     
                         <NavDropdown.Item >
                         <Link to={`/profile/${userid.id}/`} >
                           Perfil
@@ -105,14 +103,14 @@ const Header: React.FC<Props> = ({fixed}) => {
                   </>
                 ) : (
                   <>
-                    <div className="header-user">
-                      <Link to="/login" className="header-login">
+                    
+                      <Link to="/login" className="header-login ml-15">
                         LOGIN
                       </Link>
                       <Link to="/signin" className="header-cadastrar">
                         CADASTRAR
                       </Link>
-                    </div>
+                
                   </>
                 )}
               </Nav>

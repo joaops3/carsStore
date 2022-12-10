@@ -19,7 +19,14 @@ interface DataInterface {
 
 const Basket = () => {
   const [show, setShow] = useState(false);
-  const [user, setUser] = useState<any>(true);
+  const [user, setUser] = useState<any>((prev: any) => {
+    let actualCart = localStorage.getItem("user");
+    if (actualCart) {
+      return JSON.parse(actualCart);
+    } else {
+      return {};
+    }
+  });
   const [data, setData] = useState<DataInterface>({} as DataInterface);
   const { cart, removeCart } = useContext(CartContext);
 
@@ -70,6 +77,10 @@ const Basket = () => {
       return soma;
     }
   }, [data, removeCart, cart]);
+
+ const handleBuy = () => {
+  
+ }
 
   return (
     <>
@@ -152,7 +163,7 @@ const Basket = () => {
                 
               </Row>
               <Row className="mt-2">
-                <Button variant="warning">Finalizar pedido</Button>
+                <Button variant="warning" onClick={() => {handleBuy()}}>Finalizar pedido</Button>
               </Row>
             </Modal.Body>
           ) : (
@@ -166,7 +177,7 @@ const Basket = () => {
               <Row className="mt-4">
                 <Link
                   className={"btn btn-warning mt-5"}
-                  to={"/profile/registerCard"}
+                  to={ user ? `/profile/${user.id}registerCard` : "/login"}
                 >
                   Adicionar Cartão
                 </Link>

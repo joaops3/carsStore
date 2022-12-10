@@ -5,9 +5,10 @@ import Loading from "../../../components/UI/loading/Loading";
 import TransactionService from "../../../services/TransactionService";
 import { AuthContext } from "../../../context/AuthProvider";
 import { useParams } from "react-router-dom";
+import { CarsInterface } from "../../../interfaces/interfaces";
 
 const ListCars = () => {
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<{cars: CarsInterface[]}>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const param = useParams()
   //const {user} = useContext(AuthContext)
@@ -15,7 +16,7 @@ const ListCars = () => {
   const getData = useCallback(()=> {
     if(param.id){
 
-      TransactionService().seeOwned(param.id)
+      TransactionService().seeOwned(param.id).then((resp) => {})
     }
   }, [])
 
@@ -36,7 +37,7 @@ const ListCars = () => {
       ) : (
         <Row className="bg-login p-4">
           {data !== undefined &&
-            data.cars.rows.map((card: any, index: number) => {
+            data.cars.map((card: any, index: number) => {
               return (
                 <Cards
                   key={index}

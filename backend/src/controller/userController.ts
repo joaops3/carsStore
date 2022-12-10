@@ -22,30 +22,30 @@ export const getUsers = async (req: Request, res: Response) => {
     const user = await User.findAll({attributes: {exclude: ["password"]}})
 
     if (!user) {
-        return res.json({ error: "nenhum usuario" })
+        return res.status(404).json({ message: "nenhum usuario" })
     }
     res.status(200).json({ users: user })
 }
 
 export const createUser = async (req: Request, res: Response) => {
     if (!req.body.email) {
-        return res.status(422).json({ error: "email é obrigatorio" })
+        return res.status(400).json({ message: "email é obrigatorio" })
     }
     if (!req.body.name) {
-        return res.status(422).json({ error: "name é obrigatorio" })
+        return res.status(400).json({ message: "name é obrigatorio" })
     }
     if (!req.body.password) {
-        return res.status(422).json({ error: "password é obrigatorio" })
+        return res.status(400).json({ message: "password é obrigatorio" })
     }
     if (!req.body.nascimento) {
-        return res.status(422).json({ error: "nascimento é obrigatorio" })
+        return res.status(400).json({ message: "nascimento é obrigatorio" })
     }
 
     //search for user
     const { name, email, password, nascimento, admin } = req.body
     const hasUser = await User.findOne({ where: { email }, }).catch((e) => { console.log(e) })
     if (hasUser) {
-        return res.json({ error: "email ja cadastrado" })
+        return res.json({ message: "email ja cadastrado" })
     }
 
     try {
@@ -55,7 +55,7 @@ export const createUser = async (req: Request, res: Response) => {
         const newUser = await User.create({ name, email, nascimento, admin, password: hash })
         const token = await generateToken({ id: newUser.id, email: newUser.email })
         res.status(201).json({ id: newUser.id, token })
-    } catch (e) { res.status(500).json({ error: "erro: " + e }) }
+    } catch (e) { res.status(500).json({ message: "erro: " + e }) }
 }
 
 export const getUsersId = async (req: Request, res: Response) => {
@@ -66,7 +66,7 @@ export const getUsersId = async (req: Request, res: Response) => {
 
     //const card = await user.getCards()
 
-    if (!user) { return res.json({ error: "usuario nao encontrado" }) }
+    if (!user) { return res.status(404).json({ message: "usuario nao encontrado" }) }
 
     res.status(201).json({ user: user })
 }
@@ -75,7 +75,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     const { id } = req.params
     const user = await User.findByPk(id)
     if (!user) {
-        return res.json({ error: "usuario nao encontrado" })
+        return res.status(404).json({ message: "usuario nao encontrado" })
     }
     await User.destroy({ where: { id } })
 
@@ -86,7 +86,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const { id } = req.params
     const user = await User.findByPk(id)
     if (!user) {
-        return res.json({ error: "usuario nao encontrado" })
+        return res.status(404).json({ message: "usuario nao encontrado" })
     } else {
         const { id, email } = req.body
         user.email = email
@@ -98,19 +98,19 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
     if (!req.body.email && !req.body.password) {
-        return res.status(422).json({ error: "enviar email e senha" })
+        return res.status(400).json({ message: "enviar email e senha" })
     }
     const { email, password } = req.body
    
     const user = await User.findOne({ where: { email } })
     if (!user) {
-        return res.status(422).json({ error: "usuario nao cadastrado no sistema" })
+        return res.status(404).json({ message: "usuario nao cadastrado no sistema" })
     }
 
     //check password and email
     const checkpassword = await bcrypt.compare(password, user.password)
     if (!checkpassword) {
-        res.status(422).json({ error: "senha invalida!" })
+        res.status(400).json({ message: "senha invalida!" })
         return 
     }
 

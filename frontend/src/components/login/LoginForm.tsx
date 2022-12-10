@@ -30,7 +30,7 @@ const LoginForm: React.FC = () => {
   };
 
   useEffect(()=> { 
-    if(isLogged){
+    if(isLogged && user){
      
       navigate(`/profile/${user.id}`)
     }

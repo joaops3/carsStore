@@ -53,6 +53,7 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
 
   const onDrop = useCallback((acceptedFiles: any) => {
     const newList = acceptedFiles.map((file: any) => ({
+      file,
       key: uniqueId(),
       preview: URL.createObjectURL(file),
       name: file.name,
@@ -79,16 +80,17 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
       return;
     }
 
-    const formdata = new FormData()
-    uploadedFiles.forEach((file)=> {formdata.append("carimg", file.key)})
-
-    let cloneData = Object.assign({}, data);
+    let cloneData = Object.assign({} as CarsInterface, data);
     cloneData.price = Number(onlyNumbers(`${data.price}`))
     cloneData.Carimgs = uploadedFiles;
     cloneData.model = removeSpecialCharacters(cloneData.model)
-   
-     CarsService() //@ts-ignore
-      .setCars(cloneData)
+    
+    const formData = new FormData()
+    for(let [key, value] of Object.entries(cloneData)){
+      formData.append(key,value)
+    }
+     CarsService() 
+      .setCars(formData)
       .then((response) => {toast.success("Carro cadastrado com sucesso")})
       .catch((e) => {toast.error(e)});
   };
@@ -103,7 +105,6 @@ const FormProduct: React.FC<Props> = ({ operation, data }) => {
         <Form
           className="bg-login p-4"
           onSubmit={handleSubmit(submit)}
-          encType="multipart/form-data"
         >
           <Row>
             <Form.Group as={Col} md={6}>

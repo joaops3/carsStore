@@ -12,7 +12,7 @@ export const getCars = async (req: Request, res: Response) => {
 
         const cars = await Cars.findAll({ include: { model: Carsimg, attributes: { exclude: ["id", "car_id"] } } })
         if (!cars) {
-            res.status(400).json({ error: "nenhum carro encontrado" })
+            res.status(404).json({ message: "nenhum carro encontrado" })
         }
 
         return res.status(200).json({ cars })
@@ -25,7 +25,7 @@ export const getCars = async (req: Request, res: Response) => {
     await Cars.findAndCountAll({ limit: Number(limit), offset: offset, include: { model: Carsimg, attributes: { exclude: ["id", "car_id"] } } })
         .then((data) => {
             if (!data) {
-                res.status(400).json({ error: "nenhum carro encontrado" })
+                res.status(404).json({ message: "nenhum carro encontrado" })
 
             } else {
                 totalPages = Math.ceil(data.count / Number(limit)),
@@ -39,19 +39,19 @@ export const getCars = async (req: Request, res: Response) => {
 
 export const register = async (req: Request, res: Response) => {
     if (!req.body.name_car) {
-        return res.status(422).json({ error: "nome é obrigatorios" })
+        return res.status(404).json({ message: "nome é obrigatorios" })
     }
     if (!req.body.year) {
-        return res.status(422).json({ error: "ano é obrigatorios" })
+        return res.status(404).json({ message: "ano é obrigatorios" })
     }
     if (!req.body.model) {
-        return res.status(422).json({ error: "modelo é obrigatorios" })
+        return res.status(404).json({ message: "modelo é obrigatorios" })
     }
     if (!req.body.price) {
-        return res.status(422).json({ error: "preco é obrigatorios" })
+        return res.status(404).json({ message: "preco é obrigatorios" })
     }
     if (req.files?.length === 0 || req.files === undefined) {
-        return res.json({ error: "envie uma imagem" })
+        return res.json({ message: "envie uma imagem" })
     }
 
     //GERENCIAR IMAGENS
@@ -85,7 +85,7 @@ export const getCarsId = async (req: Request, res: Response) => {
 
     const cars = await Cars.findByPk(id, { include: { model: Carsimg, attributes: { exclude: ["id", "car_id"] } } }).catch(e => console.log(e))
     if (!cars) {
-        return res.status(400).json({ error: "nenhum carro encontrado" })
+        return res.status(400).json({ message: "nenhum carro encontrado" })
     }
     res.status(200).json({ cars })
 
@@ -102,7 +102,7 @@ export const deleteCar = async (req: Request, res: Response) => {
     let cars = await Cars.findByPk(id).catch(e => console.log(e))
     let carsimg = await Carsimg.findAll({where: {car_id: id}})
     if (!cars) {
-        return res.status(422).json({ error: "car not found" })
+        return res.status(404).json({ message: "car not found" })
     }
      if(carsimg.length > 0){
             carsimg.forEach(async (img) => {

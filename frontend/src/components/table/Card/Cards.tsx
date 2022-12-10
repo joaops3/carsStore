@@ -13,7 +13,7 @@ const Cards: React.FC<CarsInterface> = ({name_car, model, year,price, Carimgs, i
   return (
     <>
    
-    <Card className=" p-2 m-1" style={{ width: '18rem' }}>
+    <Card className=" p-2 m-1" style={{ width: '18rem', maxHeight: "360px" }}>
       <Card.Img variant="top" src={`${Carimgs[0].url}`} style={{maxHeight: "150px", minHeight: "150px"}} />
       <Card.Body>
         <Card.Title className="card-text">{name_car}</Card.Title>

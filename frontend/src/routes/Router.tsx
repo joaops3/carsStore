@@ -23,7 +23,7 @@ function Router() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/product/:id" element={<ProductPage />}></Route>
-        <Route path="/cart/:id" element={<Cart />}></Route>
+        <Route path="/cart" element={<Cart />}></Route>
         <Route path="/signin" element={<SignIn />}></Route>
         <Route
           path="profile"

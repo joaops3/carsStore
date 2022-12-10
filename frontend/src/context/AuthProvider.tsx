@@ -9,7 +9,7 @@ interface Props{
 
 interface AuthContextInterface{
   isLogged: boolean
-  user: any
+  user: {id: string | number,token: string, type: boolean } | null
   login: (email:string, password: string) => Promise<number> 
   logout: () => void
 }

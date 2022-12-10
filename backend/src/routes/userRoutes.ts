@@ -18,7 +18,7 @@ route.delete("/user/:id", privateRoute, userController.deleteUser)
 route.post("/search/:item", transactionsController.searchItem)
 route.get("/user/:id/seeowned",  transactionsController.seeowned)
 route.post("/user/:id/registercard",privateRoute, transactionsController.registerCard )
-route.post("/user/:id/buy/:idcar",privateRoute,  transactionsController.buyCar)
+route.post("/user/:id/buy",privateRoute,  transactionsController.buyCar)
 route.delete("/user/:id/sell/:idcar",privateRoute, transactionsController.sellCar)
 
 

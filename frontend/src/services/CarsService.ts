@@ -37,7 +37,7 @@ const CarsService = () => {
       return null
     }
   }
-  const setCars = async (data: CarsInterface) => {
+  const setCars = async (data: FormData) => {
     try {
       const request = await api.post(`/registercar`, data)
       return request

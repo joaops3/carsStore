@@ -37,9 +37,9 @@ const FormCard: React.FC<Props> = ({ operation, data }) => {
   } = useForm<CardsInterface>({ defaultValues: data });
 
   const submit: SubmitHandler<CardsInterface> = async (data) => {
-    if(process.env.REACT_APP_ADMIN != "ADMIN") {
-      return
-    }
+    // if(process.env.REACT_APP_ADMIN != "ADMIN") {
+    //   return
+    // }
     let dataClone = Object.assign({}, data);
     
     if(id){

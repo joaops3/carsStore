@@ -15,12 +15,12 @@ const Table: React.FC<Props> = ({data, itemsPerPage, handlePageChange, totalItem
   
   return (
     <>   
-    <Container className='bg-login mt-5'>
+    <Container className='bg-login mt-5 flex-column ' >
    
-        <Row className="p-3 d-flex justify-content-between">
+        <Row className="p-3 d-flex justify-content-between" style={{minHeight: "768px"}}>
         {(data?.cars.rows === undefined || data !== undefined) && (data?.cars.rows.map((card: any, index:number)=> {return <Cards key={index} id={card.id} name_car={card.name_car} model={card.model} year={card.year} price={card.price} Carimgs={card.Carimgs}></Cards>})) }
         </Row>
-        <Row>
+        <Row >
        <Col sm={12}>  {data !== undefined &&  (<MyPagination itemsPerPage={itemsPerPage} totalItems={totalItems} handlePageChange={(e) =>handlePageChange(e)}/>)}</Col>
         </Row>
     </Container>
