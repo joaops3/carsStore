@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import {Col, Container, Row} from "react-bootstrap"
 import MyPagination from '../pagination/MyPagination'
-import Cards from './Card/Cards'
+import Cards from './card/Cards'
 import {carsQuery, CarsInterface} from "../../interfaces/interfaces"
 interface Props {
   data:carsQuery | undefined,

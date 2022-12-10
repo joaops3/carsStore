@@ -13,6 +13,7 @@ import { addMoneyRealMask } from "../../helpers/helpers";
 import CarsService from "../../services/CarsService";
 import { CarsInterface } from "../../interfaces/interfaces";
 import { CartContext } from "../../context/CartProvider";
+import Loading from "../../components/UI/loading/Loading";
 interface DataInterface {
   cars: CarsInterface[];
 }
@@ -55,6 +56,7 @@ const Basket = () => {
   }, [cart, removeCart]);
 
   const filteredList = useMemo(() => {
+    if(!data) return
     if (data.cars) {
       let newList: any[] = [];
       data?.cars.filter((item: CarsInterface) => {
@@ -67,6 +69,7 @@ const Basket = () => {
   }, [data, removeCart, cart]);
 
   const total = useMemo(() => {
+    if(!data) return
     if (data.cars) {
       let soma: number = 0;
       data?.cars.filter((item: CarsInterface) => {
@@ -81,6 +84,7 @@ const Basket = () => {
  const handleBuy = () => {
   
  }
+ 
 
   return (
     <>

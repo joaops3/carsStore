@@ -12,7 +12,7 @@ import SearchBar from "../../components/search/SearchBar";
 import Loading from "../../components/UI/loading/Loading";
 import { useState, useEffect } from "react";
 import { CarsInterface, carsQuery } from "../../interfaces/interfaces";
-import Cards from "../../components/table/Card/Cards";
+import Cards from "../../components/table/card/Cards";
 import CarsService from "../../services/CarsService";
 
 

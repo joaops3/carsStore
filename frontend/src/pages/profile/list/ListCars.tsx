@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useContext, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
-import Cards from "../../../components/table/Card/Cards";
+import Cards from "../../../components/table/card/Cards";
 import Loading from "../../../components/UI/loading/Loading";
 import TransactionService from "../../../services/TransactionService";
 import { AuthContext } from "../../../context/AuthProvider";
